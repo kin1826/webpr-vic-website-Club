@@ -75,7 +75,6 @@ img, svg { display: block; max-width: 100%; }
 .logo-on-dark { filter: invert(1); mix-blend-mode: screen; }
 .text-balance { text-wrap: balance; }
 
-.hero-mask { mask-image: linear-gradient(to bottom, black 72%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 72%, transparent 100%); }
 .gradient-orb { filter: blur(1px); background: radial-gradient(circle at 34% 30%, #7898ff, #2457f5 45%, #1736a5 100%); box-shadow: 0 0 80px rgba(36,87,245,.46); }
 .project-browser { transform: perspective(700px) rotateX(5deg) rotateZ(-3deg); }
 .project-tool { transform: perspective(700px) rotateX(4deg) rotateZ(3deg); }
