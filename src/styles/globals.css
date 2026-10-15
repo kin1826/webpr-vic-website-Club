@@ -79,6 +79,12 @@ img, svg { display: block; max-width: 100%; }
 .project-browser { transform: perspective(700px) rotateX(5deg) rotateZ(-3deg); }
 .project-tool { transform: perspective(700px) rotateX(4deg) rotateZ(3deg); }
 
+.article-body { font-size: clamp(1rem, 1.4vw, 1.1rem); line-height: 1.82; color: var(--vic-muted); }
+.article-body > p { margin: 0 0 1.5rem; }
+.article-body > h2 { margin: 3.25rem 0 1rem; color: var(--vic-ink); font-size: clamp(1.6rem, 3vw, 2.15rem); line-height: 1.3; letter-spacing: -.035em; font-weight: 700; }
+.article-body > ul { margin: 1.5rem 0; padding-left: 1.35rem; list-style: disc; }
+.article-body > ul li { margin: .6rem 0; padding-left: .35rem; }
+
 @media (max-width: 62rem) { .page-container { width: min(calc(100% - 3.5rem), var(--vic-container)); } }
 @media (max-width: 42.5rem) {
   :root { --vic-radius-lg: 1.75rem; }

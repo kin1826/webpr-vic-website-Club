@@ -9,6 +9,7 @@ Website giới thiệu VIC được xây dựng như một dự án mẫu để 
 - Motion for React cho reveal, dialog và micro-interaction.
 - shadcn/ui theo mô hình copy-to-own, sử dụng Radix UI primitives đã được tùy biến.
 - Lucide React cho icon.
+- React Router cho điều hướng đa trang và URL chi tiết.
 - Canvas API cho nền caro tương tác ở hero.
 
 ## Cài đặt và chạy
@@ -38,24 +39,38 @@ Thư mục kết quả production là `dist/`.
 src/
 ├── components/
 │   ├── layout/       # Header và footer
-│   ├── sections/     # Mỗi section trang chủ là một component
+│   ├── content/      # Card và thành phần nội dung dùng chung
+│   ├── organization/ # Sơ đồ tổ chức
+│   ├── sections/     # Các section trang chủ
 │   ├── shared/       # Logo, heading, reveal và canvas grid
 │   └── ui/           # shadcn/ui primitives đã tùy biến
-├── config/           # Link chính thức và navigation
-├── data/             # Nội dung hoạt động, dự án, FAQ, các ban
-├── pages/            # Trang chủ và design system
+├── config/           # Cấu hình cũ đang được giữ tương thích
+├── data/             # Dữ liệu quan hệ dùng chung cho toàn website
+├── pages/            # Trang chủ, danh sách, chi tiết và design system
 ├── styles/           # Design tokens và global styles
 └── types/            # TypeScript types cho dữ liệu
 ```
 
 ## Chỉnh sửa nội dung
 
-- Nội dung các ban, hoạt động, dự án và FAQ: `src/data/content.ts`.
-- Facebook, email, GitHub và form đăng ký: `src/config/site.ts`.
+- Thông tin ban, nhân sự, chức danh, hoạt động, sản phẩm, bài viết và FAQ: `src/data/site-data.ts`.
+- Facebook, email, GitHub, trạng thái tuyển và form đăng ký: `clubSettings` trong `src/data/site-data.ts`.
+- Kiểu dữ liệu và quan hệ ID: `src/types/content-model.ts`.
 - Màu sắc, font, radius và shadow: `src/styles/globals.css`.
 - Logo gốc: `image/Logo VIC - cut.jpg`.
 
 Các link chưa được VIC xác nhận đang để `null`; website sẽ không hiển thị link giả. Các dự án và hoạt động mẫu đều được ghi rõ là nội dung minh họa.
+
+## Các route chính
+
+- `/`, `/gioi-thieu`, `/hoctap`, `/truyenthong`, `/tham-gia`.
+- `/hoat-dong` và `/hoat-dong/:slug`.
+- `/san-pham` và `/san-pham/:slug`.
+- `/hoc-thuat` và `/hoc-thuat/:slug`.
+- `/thanh-vien/:slug`.
+- `/design-system` và trang 404.
+
+Lệnh build tạo thêm `index.html` cho các route mẫu và `404.html`, giúp refresh URL con hoạt động trên hosting tĩnh.
 
 ## Nguyên tắc đóng góp
 
