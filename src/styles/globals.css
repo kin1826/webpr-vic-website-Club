@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Be Vietnam Pro", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --color-vic-bg: #fafaf8;
+  --color-vic-surface: #f1f3f6;
+  --color-vic-ink: #161616;
+  --color-vic-muted: #5b606b;
+  --color-vic-blue: #2457f5;
+  --color-vic-blue-soft: #eaf0ff;
+  --radius-glass: 2rem;
+  --shadow-glass: 0 20px 70px rgba(22, 22, 22, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+:root {
+  color: #161616;
+  background: #fafaf8;
+  font-family: "Be Vietnam Pro", system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --vic-bg: #fafaf8;
+  --vic-surface: #f1f3f6;
+  --vic-ink: #161616;
+  --vic-muted: #5b606b;
+  --vic-blue: #2457f5;
+  --vic-blue-soft: #eaf0ff;
+  --vic-line: rgba(22, 22, 22, 0.1);
+  --vic-grid: rgba(22, 22, 22, 0.12);
+  --vic-glass: rgba(255, 255, 255, 0.68);
+  --vic-glass-strong: rgba(255, 255, 255, 0.86);
+  --vic-radius-lg: 2rem;
+  --vic-radius-md: 1.5rem;
+  --vic-radius-sm: 0.95rem;
+  --vic-shadow: 0 20px 70px rgba(22, 22, 22, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --vic-container: 77.5rem;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 7rem; }
+body { margin: 0; min-width: 20rem; min-height: 100vh; overflow-x: hidden; background: var(--vic-bg); }
+body[data-scroll-locked] { overflow: hidden; }
+button, a { font: inherit; }
+button { color: inherit; }
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+::selection { color: white; background: var(--vic-blue); }
+:focus-visible { outline: 3px solid rgba(36, 87, 245, 0.48); outline-offset: 3px; }
+
+.page-container { width: min(calc(100% - 6rem), var(--vic-container)); margin-inline: auto; }
+.section-space { padding-block: clamp(4.5rem, 8vw, 7rem); }
+.glass-surface {
+  background: var(--vic-glass);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: var(--vic-shadow);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+}
+.glass-highlight { position: relative; isolation: isolate; }
+.glass-highlight::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1;
+  background: linear-gradient(145deg, rgba(255,255,255,.68), rgba(255,255,255,.08) 35%, transparent 60%);
+}
+.section-label {
+  display: inline-flex; align-items: center; gap: .65rem; margin: 0 0 1.25rem;
+  color: var(--vic-blue); font-family: "IBM Plex Mono", monospace; font-size: .76rem; font-weight: 600; letter-spacing: .055em;
+}
+.section-label::before { content: ""; width: 1.65rem; height: 1px; background: currentColor; }
+.section-title { margin: 0; max-width: 55rem; font-size: clamp(2rem, 4.4vw, 3.25rem); line-height: 1.18; letter-spacing: -.045em; font-weight: 700; text-wrap: balance; }
+.section-intro { max-width: 43rem; margin: 1.5rem 0 0; color: var(--vic-muted); font-size: clamp(1rem, 1.5vw, 1.125rem); line-height: 1.75; }
+.interactive-card { transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease; }
+.interactive-card:hover { transform: translateY(-4px); box-shadow: 0 28px 80px rgba(22,22,22,.12), inset 0 1px 0 white; }
+.logo-blend { mix-blend-mode: multiply; }
+.logo-on-dark { filter: invert(1); mix-blend-mode: screen; }
+.text-balance { text-wrap: balance; }
+
+.hero-mask { mask-image: linear-gradient(to bottom, black 72%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 72%, transparent 100%); }
+.gradient-orb { filter: blur(1px); background: radial-gradient(circle at 34% 30%, #7898ff, #2457f5 45%, #1736a5 100%); box-shadow: 0 0 80px rgba(36,87,245,.46); }
+.project-browser { transform: perspective(700px) rotateX(5deg) rotateZ(-3deg); }
+.project-tool { transform: perspective(700px) rotateX(4deg) rotateZ(3deg); }
+
+@media (max-width: 62rem) { .page-container { width: min(calc(100% - 3.5rem), var(--vic-container)); } }
+@media (max-width: 42.5rem) {
+  :root { --vic-radius-lg: 1.75rem; }
+  .page-container { width: calc(100% - 2.5rem); }
+  .section-space { padding-block: 4.25rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+@supports not (backdrop-filter: blur(1px)) { .glass-surface { background: rgba(255,255,255,.96); } }

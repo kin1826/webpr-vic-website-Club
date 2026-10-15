@@ -1,0 +1,13 @@
+import { ArrowUpRight } from "lucide-react";
+import { officialLinks } from "../../config/site";
+import { Button } from "../ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import { Reveal } from "../shared/reveal";
+import { SectionHeading } from "../shared/section-heading";
+
+const steps = ["Tìm hiểu CLB và chọn ban phù hợp với điều bạn muốn thử.", "Gửi thông tin đăng ký khi VIC mở đợt tuyển thành viên.", "Kết nối và tham gia những hoạt động phù hợp với bạn."];
+
+export function JoinSection() {
+  const cta = <Button variant="light">Nhận thông tin tham gia <ArrowUpRight size={17} /></Button>;
+  return <section id="join" className="section-space" aria-labelledby="join-title"><div className="page-container"><Reveal className="relative overflow-hidden rounded-[2.5rem] bg-vic-ink p-[clamp(2rem,6vw,4.5rem)] text-white"><div className="pointer-events-none absolute -right-40 -top-40 size-[28rem] rounded-full border border-white/15 shadow-[0_0_0_70px_rgba(255,255,255,.03),0_0_0_140px_rgba(255,255,255,.02)]" /><div className="gradient-orb pointer-events-none absolute right-[14%] top-[18%] size-20 rounded-full opacity-80 max-sm:size-14" /><div className="relative z-10 max-w-3xl [&_.section-label]:text-[#8ea8ff] [&_.section-intro]:text-white/65"><SectionHeading label="05 / YOUR NEXT CHAPTER" id="join-title" title={<>Bạn không cần biết hết.<br />Chỉ cần muốn bắt đầu.</>} description="Nếu bạn thích công nghệ, muốn thử một điều mới hoặc tìm những người cùng học, VIC có thể là nơi để bạn bắt đầu." /></div><div className="relative z-10 my-12 grid gap-6 md:grid-cols-3">{steps.map((step, index) => <div key={step} className="border-t border-white/20 pt-5 max-sm:grid max-sm:grid-cols-[2rem_1fr]"><span className="font-mono text-xs font-semibold text-[#8ea8ff]">0{index + 1}</span><p className="mt-3 max-w-[18rem] text-sm leading-7 text-white/72 max-sm:mt-0">{step}</p></div>)}</div><div className="relative z-10">{officialLinks.join ? <Button asChild variant="light"><a href={officialLinks.join}>Nhận thông tin tham gia <ArrowUpRight size={17} /></a></Button> : <Dialog><DialogTrigger asChild>{cta}</DialogTrigger><DialogContent title="Kênh đăng ký đang được chuẩn bị." description="Đây là bản demo nên website chưa thu thập thông tin cá nhân. Khi VIC có biểu mẫu hoặc fanpage chính thức, nút này sẽ được kết nối bằng một thay đổi trong cấu hình."><p className="mt-6 rounded-2xl bg-vic-blue-soft p-4 text-sm leading-6 text-[#193baf]">Hãy theo dõi kênh thông tin chính thức của VIC khi được công bố.</p></DialogContent></Dialog>}</div></Reveal></div></section>;
+}
