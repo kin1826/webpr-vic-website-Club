@@ -16,6 +16,7 @@ const ActivityDetailPage = lazy(() => import("./pages/detail-pages").then((modul
 const ProjectDetailPage = lazy(() => import("./pages/detail-pages").then((module) => ({ default: module.ProjectDetailPage })));
 const ArticleDetailPage = lazy(() => import("./pages/detail-pages").then((module) => ({ default: module.ArticleDetailPage })));
 const MemberDetailPage = lazy(() => import("./pages/detail-pages").then((module) => ({ default: module.MemberDetailPage })));
+const RecruitmentAdminPage = lazy(() => import("./pages/recruitment-admin-page").then((module) => ({ default: module.RecruitmentAdminPage })));
 
 function ScrollManager() {
   const { pathname, hash } = useLocation();
@@ -52,6 +53,7 @@ export function App() {
     <Route path="/hoc-thuat/:slug" element={<ArticleDetailPage />} />
     <Route path="/thanh-vien/:slug" element={<MemberDetailPage />} />
     <Route path="/tham-gia" element={<JoinPage />} />
+    <Route path="/admin/tuyen-thanh-vien" element={<RecruitmentAdminPage />} />
     <Route path="/design-system" element={<DesignSystemPage />} />
     <Route path="*" element={<NotFoundPage />} />
   </Routes></Suspense><Footer /></>;
