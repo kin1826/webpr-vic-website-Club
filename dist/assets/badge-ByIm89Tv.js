@@ -1,2 +1,0 @@
-import{j as r,n as s}from"./index-BvanMwp1.js";function o({className:e,...n}){return r.jsx("span",{className:s("inline-flex items-center rounded-full border border-black/10 bg-white/55 px-3 py-1.5 text-xs font-semibold",e),...n})}export{o as B};
-//# sourceMappingURL=badge-ByIm89Tv.js.map
