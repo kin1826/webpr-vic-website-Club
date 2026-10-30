@@ -71,7 +71,7 @@ function FormEditor({ initial, idToken, onPublished }: { initial: RecruitmentFor
 }
 
 export function RecruitmentAdminPage() {
-  const [token, setToken] = useState(import.meta.env.DEV ? "local-prototype" : "");
+  const [token, setToken] = useState(import.meta.env.DEV && !hasRecruitmentApi ? "local-prototype" : "");
   const [form, setForm] = useState<RecruitmentFormConfig | null>(null);
   const [applications, setApplications] = useState<AdminApplicationsResponse | null>(null);
   const [loading, setLoading] = useState(false);
