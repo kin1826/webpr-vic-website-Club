@@ -8,7 +8,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-vic-ink text-white shadow-[0_12px_30px_rgba(22,22,22,.18)] hover:bg-vic-blue hover:shadow-[0_14px_34px_rgba(36,87,245,.25)]",
+        primary: "bg-vic-ink !text-white shadow-[0_12px_30px_rgba(22,22,22,.18)] hover:bg-vic-blue hover:shadow-[0_14px_34px_rgba(36,87,245,.25)]",
         secondary: "border border-black/10 bg-white/70 text-vic-ink hover:bg-white",
         glass: "glass-surface text-vic-ink hover:bg-white/90",
         light: "bg-white text-vic-ink hover:bg-vic-blue hover:text-white",
