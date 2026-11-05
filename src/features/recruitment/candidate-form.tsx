@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AlertCircle, ArrowLeft, ArrowRight, Check, CheckCircle2, ExternalLink, LoaderCircle, RefreshCw, Send } from "lucide-react";
 import { Button } from "../../components/ui/button";
-import { fetchRecruitmentForm, submitRecruitmentApplication } from "./api";
+import { fetchRecruitmentForm, fetchSubmissionStatus, submitRecruitmentApplication } from "./api";
 import { hasRecruitmentApi } from "./config";
 import type { ApiFailure, FieldErrorMap, RecruitmentAnswers, RecruitmentField, RecruitmentFormConfig, SubmitApplicationResult } from "./types";
 import { isSafeInfoUrl, normalizeEmail, validateRecruitmentAnswers } from "./validation";
@@ -74,8 +74,11 @@ export function CandidateForm() {
   const [reviewing, setReviewing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [ambiguousSubmission, setAmbiguousSubmission] = useState(false);
+  const [checkingStatus, setCheckingStatus] = useState(false);
   const [result, setResult] = useState<SubmitApplicationResult | null>(null);
   const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
   const [nextAllowedAt, setNextAllowedAt] = useState<string | null>(() => sessionStorage.getItem(COOLDOWN_STORAGE_KEY));
   const idempotencyKey = useRef(crypto.randomUUID());
   const honeypot = useRef<HTMLInputElement>(null);
@@ -90,6 +93,33 @@ export function CandidateForm() {
   };
 
   useEffect(() => { void load(); }, []);
+  useEffect(() => {
+    if (!ambiguousSubmission || result) return;
+    let cancelled = false;
+    const check = async () => {
+      setCheckingStatus(true);
+      try {
+        for (const delay of [2000, 5000, 10000]) {
+          await new Promise((resolve) => window.setTimeout(resolve, delay));
+          if (cancelled) return;
+          try {
+            const status = await fetchSubmissionStatus(idempotencyKey.current);
+            if (cancelled) return;
+            if (status.state === "received") {
+              setResult(status.result);
+              setNextAllowedAt(status.result.nextAllowedAt);
+              sessionStorage.setItem(COOLDOWN_STORAGE_KEY, status.result.nextAllowedAt);
+              setAmbiguousSubmission(false);
+              idempotencyKey.current = crypto.randomUUID();
+              return;
+            }
+          } catch { /* Keep the same key and continue with the next status check. */ }
+        }
+      } finally { if (!cancelled) setCheckingStatus(false); }
+    };
+    void check();
+    return () => { cancelled = true; };
+  }, [ambiguousSubmission, result]);
   useEffect(() => {
     const warn = (event: BeforeUnloadEvent) => { if (dirty && !result) event.preventDefault(); };
     window.addEventListener("beforeunload", warn);
@@ -114,14 +144,31 @@ export function CandidateForm() {
     setReviewing(true); window.scrollTo({ top: document.getElementById("application-form")?.offsetTop ?? 0, behavior: "smooth" });
   };
 
+  const acceptResult = (response: SubmitApplicationResult) => {
+    setResult(response); setAmbiguousSubmission(false); setNextAllowedAt(response.nextAllowedAt); sessionStorage.setItem(COOLDOWN_STORAGE_KEY, response.nextAllowedAt); idempotencyKey.current = crypto.randomUUID();
+  };
+
+  const checkSubmissionStatus = async () => {
+    if (checkingStatus) return;
+    setCheckingStatus(true); setSubmitError("");
+    try {
+      const status = await fetchSubmissionStatus(idempotencyKey.current);
+      if (status.state === "received") acceptResult(status.result);
+      else setSubmitError("Hệ thống chưa ghi nhận kết quả cuối. Đơn có thể vẫn đang xử lý; hãy kiểm tra lại sau ít phút, không gửi đơn mới.");
+    } catch (error) { setSubmitError(error instanceof Error ? error.message : "Chưa thể kiểm tra kết quả. Hãy thử lại sau."); }
+    finally { setCheckingStatus(false); }
+  };
+
   const submit = async () => {
-    if (!config || submitting || secondsRemaining > 0) return;
+    if (!config || submitting || ambiguousSubmission || secondsRemaining > 0) return;
     setSubmitting(true); setSubmitError("");
     try {
       const response = await submitRecruitmentApplication({ formId: config.formId, campaignId: config.campaignId, formVersion: config.formVersion, idempotencyKey: idempotencyKey.current, answers, honeypot: honeypot.current?.value ?? "", turnstileToken });
-      setResult(response); setNextAllowedAt(response.nextAllowedAt); sessionStorage.setItem(COOLDOWN_STORAGE_KEY, response.nextAllowedAt); idempotencyKey.current = crypto.randomUUID();
+      acceptResult(response);
     } catch (error) {
       const failure = error as ApiFailure;
+      if (turnstileToken) { setTurnstileToken(""); setTurnstileResetKey((current) => current + 1); }
+      if (failure.outcomeUnknown) setAmbiguousSubmission(true);
       if (failure.fieldErrors) { setErrors(failure.fieldErrors); setReviewing(false); focusFirstError(failure.fieldErrors); }
       if (failure.nextAllowedAt) { setNextAllowedAt(failure.nextAllowedAt); sessionStorage.setItem(COOLDOWN_STORAGE_KEY, failure.nextAllowedAt); }
       if (failure.code === "FORM_VERSION_CHANGED" && failure.latestConfig) { setConfig(failure.latestConfig); setReviewing(false); }
@@ -134,7 +181,7 @@ export function CandidateForm() {
 
   if (!config.isOpen) return <div className="glass-surface rounded-[2rem] p-8 md:p-12"><span className="inline-flex rounded-full bg-vic-surface px-3 py-1 font-mono text-xs font-semibold">HIỆN ĐANG ĐÓNG</span><h2 className="mt-6 text-3xl font-bold tracking-[-.04em]">{config.formTitle}</h2><p className="mt-4 max-w-2xl leading-7 text-vic-muted">{config.closedMessage}</p>{config.contactEmail && <a className="mt-6 inline-flex font-semibold text-vic-blue" href={`mailto:${config.contactEmail}`}>Liên hệ {config.contactEmail}</a>}{config.facebookUrl && <a className="ml-5 mt-6 inline-flex font-semibold text-vic-blue" href={config.facebookUrl} target="_blank" rel="noreferrer">Facebook VIC</a>}{config.source === "prototype" && <p className="mt-8 rounded-2xl bg-amber-50 p-4 text-sm leading-6 text-amber-900">Website chưa kết nối Google Sheet. Đây là trạng thái an toàn mặc định, không phải trạng thái đọc trực tiếp từ Sheet.</p>}</div>;
 
-  if (result) return <div className="glass-surface rounded-[2rem] p-8 md:p-12" role="status"><CheckCircle2 className="text-vic-blue" size={42} /><h2 className="mt-6 text-3xl font-bold tracking-[-.04em]">{config.successMessage}</h2><p className="mt-4 leading-7 text-vic-muted">{result.message}</p><dl className="mt-7 grid gap-4 rounded-2xl bg-white/75 p-5 sm:grid-cols-2"><div><dt className="text-xs font-semibold uppercase tracking-wider text-vic-muted">Mã đơn</dt><dd className="mt-1 font-mono font-semibold">{result.applicationId}</dd></div><div><dt className="text-xs font-semibold uppercase tracking-wider text-vic-muted">Email xác nhận</dt><dd className="mt-1 font-semibold">{result.emailStatus === "sent" ? "Đã gửi" : "Đang chờ xử lý"}</dd></div></dl>{secondsRemaining > 0 && <p className="mt-6 text-sm text-vic-muted">Có thể gửi lại sau <strong className="font-mono text-vic-ink">{formatCountdown(secondsRemaining)}</strong>. Backend vẫn là nguồn quyết định thời gian.</p>}</div>;
+  if (result) return <div className="glass-surface rounded-[2rem] p-8 md:p-12" role="status"><CheckCircle2 className="text-vic-blue" size={42} /><h2 className="mt-6 text-3xl font-bold tracking-[-.04em]">{config.successMessage}</h2><p className="mt-4 leading-7 text-vic-muted">{result.message}</p><dl className="mt-7 grid gap-4 rounded-2xl bg-white/75 p-5 sm:grid-cols-2"><div><dt className="text-xs font-semibold uppercase tracking-wider text-vic-muted">Mã đơn</dt><dd className="mt-1 font-mono font-semibold">{result.applicationId}</dd></div><div><dt className="text-xs font-semibold uppercase tracking-wider text-vic-muted">Email xác nhận</dt><dd className="mt-1 font-semibold">{result.emailStatus === "sent" ? "Đã gửi" : result.emailStatus === "needs_review" ? "Đang được VIC kiểm tra" : result.emailStatus === "failed" ? "Cần VIC gửi lại" : "Đang chờ xử lý"}</dd></div></dl>{secondsRemaining > 0 && <p className="mt-6 text-sm text-vic-muted">Có thể gửi lại sau <strong className="font-mono text-vic-ink">{formatCountdown(secondsRemaining)}</strong>. Backend vẫn là nguồn quyết định thời gian.</p>}</div>;
 
   return <div id="application-form" className="glass-surface rounded-[2rem] p-5 md:p-10">
     {!hasRecruitmentApi && <div className="mb-7 rounded-2xl bg-amber-50 p-4 text-sm leading-6 text-amber-950"><strong>Chế độ prototype local:</strong> lần gửi thử không ghi vào Google Sheet và không gửi email thật.</div>}
@@ -142,6 +189,7 @@ export function CandidateForm() {
     <input ref={honeypot} type="text" name="website" tabIndex={-1} autoComplete="off" className="absolute -left-[9999px]" aria-hidden="true" />
     {!reviewing ? <form className="mt-9 space-y-11" onSubmit={(event) => { event.preventDefault(); beginReview(); }} noValidate>
       {sections.map((section, sectionIndex) => <fieldset key={section} className="space-y-7"><legend className="mb-2 flex w-full items-center gap-3 font-mono text-xs font-semibold tracking-wider text-vic-blue"><span>{String(sectionIndex + 1).padStart(2, "0")}</span><span className="h-px flex-1 bg-vic-blue/20" /><span>{section.toUpperCase()}</span></legend>{activeFields.filter((field) => (field.section || "Thông tin đăng ký") === section).map((field) => <DynamicField key={field.fieldId} field={field} value={answers[field.fieldId]} error={errors[field.fieldId]} onChange={(value) => { setAnswers((current) => ({ ...current, [field.fieldId]: value })); setErrors((current) => ({ ...current, [field.fieldId]: "" })); }} />)}</fieldset>)}
+      {ambiguousSubmission && <div className="rounded-2xl bg-amber-50 p-4 text-sm leading-6 text-amber-950" role="status">{checkingStatus ? "Đang kiểm tra trạng thái đơn đã nộp…" : "Chưa có kết quả cuối. Đơn có thể đã được ghi; không gửi lại biểu mẫu để tránh tạo đơn trùng."}</div>}
       {submitError && <p className="rounded-2xl bg-red-50 p-4 text-sm font-medium text-red-800" role="alert">{submitError}</p>}
       <Button type="submit" className="w-full sm:w-auto">Xem lại thông tin <ArrowRight size={17} /></Button>
     </form> : <div className="mt-9">
@@ -149,8 +197,8 @@ export function CandidateForm() {
       <dl className="mt-7 divide-y divide-black/10 rounded-2xl border border-black/10 bg-white/75 px-5">{activeFields.map((field) => { const raw = answers[field.fieldId]; const option = field.options.find((item) => item.optionId === raw); return <div key={field.fieldId} className="grid gap-1 py-4 sm:grid-cols-[12rem_1fr]"><dt className="text-sm font-semibold text-vic-muted">{field.label}</dt><dd className="break-words text-sm font-medium">{field.type === "checkbox" ? (raw ? "Đã đồng ý" : "Chưa đồng ý") : option?.label ?? String(raw || "—")}</dd></div>; })}</dl>
       {submitError && <p className="mt-5 rounded-2xl bg-red-50 p-4 text-sm font-medium text-red-800" role="alert">{submitError}</p>}
       {secondsRemaining > 0 && <p className="mt-5 rounded-2xl bg-amber-50 p-4 text-sm text-amber-900">Vui lòng chờ <strong className="font-mono">{formatCountdown(secondsRemaining)}</strong> trước khi gửi đơn tiếp theo.</p>}
-      <div className="mt-6"><TurnstileChallenge onToken={setTurnstileToken} /></div>
-      <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row"><Button variant="secondary" onClick={() => setReviewing(false)}><ArrowLeft size={17} /> Quay lại chỉnh sửa</Button><Button onClick={submit} disabled={submitting || secondsRemaining > 0}>{submitting ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />} {submitting ? "Đang gửi…" : "Gửi đơn ứng tuyển"}</Button></div>
+      <div className="mt-6"><TurnstileChallenge onToken={setTurnstileToken} resetKey={turnstileResetKey} /></div>
+      <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row"><Button variant="secondary" disabled={ambiguousSubmission} onClick={() => setReviewing(false)}><ArrowLeft size={17} /> Quay lại chỉnh sửa</Button><Button onClick={ambiguousSubmission ? checkSubmissionStatus : submit} disabled={submitting || checkingStatus || (!ambiguousSubmission && secondsRemaining > 0)}>{submitting || checkingStatus ? <LoaderCircle className="animate-spin" size={17} /> : ambiguousSubmission ? <RefreshCw size={17} /> : <Send size={17} />} {submitting ? "Đang gửi…" : checkingStatus ? "Đang kiểm tra…" : ambiguousSubmission ? "Kiểm tra lại kết quả" : "Gửi đơn ứng tuyển"}</Button></div>
     </div>}
   </div>;
 }

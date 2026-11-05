@@ -1,8 +1,8 @@
 import { cp, mkdir } from "node:fs/promises";
 
 const routes = [
-  "design-system", "gioi-thieu", "hoctap", "truyenthong", "hoat-dong",
-  "hoat-dong/tech-sharing-mau", "hoat-dong/mini-challenge-mau", "hoat-dong/build-and-show-mau",
+  "design-system", "gioi-thieu", "hoctap", "truyenthong", "hoat-dong", "home-preview", "home-preview1",
+  "hoat-dong/tech-sharing-mau", "hoat-dong/mini-challenge-mau", "hoat-dong/build-and-show-mau", "hoat-dong/open-lab-mau",
   "san-pham", "san-pham/website-cong-dong-mau", "san-pham/mini-game-mau", "san-pham/bo-truyen-thong-mau",
   "hoc-thuat", "hoc-thuat/chia-nho-y-tuong", "hoc-thuat/checklist-ban-giao", "hoc-thuat/ghi-lai-dieu-da-hoc",
   "thanh-vien/ho-so-thanh-vien-mau", "tham-gia", "admin/tuyen-thanh-vien",

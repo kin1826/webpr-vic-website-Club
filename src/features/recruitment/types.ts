@@ -55,7 +55,7 @@ export type SubmitApplicationPayload = {
 export type SubmitApplicationResult = {
   applicationId: string;
   submittedAt: string;
-  emailStatus: "pending" | "sent" | "failed";
+  emailStatus: "pending" | "sent" | "failed" | "needs_review";
   message: string;
   nextAllowedAt: string;
   duplicate?: boolean;
@@ -80,7 +80,7 @@ export type AdminApplication = {
   fullName: string;
   department: string;
   departmentLabel: string;
-  emailStatus: "pending" | "sent" | "failed";
+  emailStatus: "pending" | "sent" | "failed" | "needs_review";
   emailError?: string | null;
   answersSnapshot: AnswerSnapshotItem[];
 };
@@ -100,4 +100,5 @@ export type ApiFailure = Error & {
   retryAfterSeconds?: number;
   nextAllowedAt?: string;
   latestConfig?: RecruitmentFormConfig;
+  outcomeUnknown?: boolean;
 };

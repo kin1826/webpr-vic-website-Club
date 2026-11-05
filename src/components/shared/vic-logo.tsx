@@ -1,4 +1,4 @@
-import logoUrl from "../../../image/Logo VIC - cut.jpg";
+import logoUrl from "../../../image/Logo VIC - cut.png";
 import { cn } from "../../lib/utils";
 
 type VicLogoProps = { className?: string; dark?: boolean };
