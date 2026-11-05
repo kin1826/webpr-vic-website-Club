@@ -29,7 +29,7 @@ export function Header() {
   useEffect(() => { document.body.toggleAttribute("data-scroll-locked", mobileOpen); return () => document.body.removeAttribute("data-scroll-locked"); }, [mobileOpen]);
 
   return <>
-    <header className={cn("glass-surface fixed left-1/2 top-4 z-50 flex h-[4.65rem] w-[min(calc(100%-2.5rem),72.5rem)] -translate-x-1/2 items-center rounded-full px-3 pl-5 transition-all md:top-[1.1rem]", scrolled && "bg-white/88 shadow-[0_14px_44px_rgba(22,22,22,.13)]")}>
+    <header className={cn("glass-surface fixed left-1/2 top-4 z-50 flex h-[4.65rem] w-[min(calc(100%-2.5rem),72.5rem)] -translate-x-1/2 items-center rounded-full px-3 pl-5 transition-[background-color,box-shadow] duration-300 ease-out md:top-[1.1rem]", scrolled && "bg-white/88 shadow-[0_14px_44px_rgba(22,22,22,.13)]")}>
       <Link to="/" className="flex shrink-0 items-center gap-3" aria-label="VIC — Trang chủ"><VicLogo className="w-[4.9rem]" /><span className="hidden leading-tight sm:grid"><strong className="text-xs tracking-wide">VKU IT CLUB</strong><span className="font-mono text-[.6rem] text-vic-muted">WE MAKE IT.</span></span></Link>
       <nav className="mx-auto hidden items-center gap-1 lg:flex" aria-label="Điều hướng chính">
         <NavLink to="/gioi-thieu" className={navClass}>Về VIC</NavLink>

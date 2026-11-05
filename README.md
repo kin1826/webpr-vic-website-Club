@@ -11,7 +11,7 @@ Website giới thiệu VIC được xây dựng như một dự án mẫu để 
 - Lucide React cho icon.
 - React Router cho điều hướng đa trang và URL chi tiết.
 - Canvas API cho nền caro tương tác ở hero.
-- Google Apps Script làm API trung gian tới Google Sheet và gửi email.
+- Express + TypeScript làm API công khai; Google Apps Script ghi đơn vào Google Sheet và gửi email qua hàng đợi nền.
 
 ## Cài đặt và chạy
 
@@ -19,10 +19,12 @@ Yêu cầu Node.js phiên bản 20.19 trở lên.
 
 ```bash
 npm install
-npm run dev
+cp .env.example .env.local
+cp backend/.env.example backend/.env
+npm run dev:backend
 ```
 
-Vite sẽ in địa chỉ local trong terminal. Trang design system nằm tại `/design-system`.
+Điền hai file env theo [hướng dẫn backend](backend/README.md). Mở terminal thứ hai tại repo và chạy `npm run dev` để khởi động Vite. Vite in địa chỉ local trong terminal; trang design system nằm tại `/design-system`.
 
 ## Kiểm tra và build
 
@@ -33,7 +35,7 @@ npm run build
 npm run preview
 ```
 
-Thư mục kết quả production là `dist/`.
+Lệnh build typecheck và biên dịch Express sang `backend/dist/`, sau đó build frontend vào `dist/`.
 
 ## Cấu trúc chính
 
@@ -52,6 +54,13 @@ src/
 ├── pages/            # Trang chủ, danh sách, chi tiết và design system
 ├── styles/           # Design tokens và global styles
 └── types/            # TypeScript types cho dữ liệu
+backend/
+├── src/config/        # Env và giới hạn triển khai
+├── src/middleware/    # Auth admin, error handling và rate limit
+├── src/routes/        # API form, applications và admin
+├── src/services/      # Apps Script HMAC client, Google auth, Turnstile
+├── src/validation/    # Request schemas
+└── README.md          # Thiết lập và triển khai backend
 ```
 
 ## Chỉnh sửa nội dung
@@ -60,7 +69,7 @@ src/
 - Facebook, email, GitHub, trạng thái tuyển và form đăng ký: `clubSettings` trong `src/data/site-data.ts`.
 - Kiểu dữ liệu và quan hệ ID: `src/types/content-model.ts`.
 - Màu sắc, font, radius và shadow: `src/styles/globals.css`.
-- Logo gốc: `image/Logo VIC - cut.jpg`.
+- Logo gốc: `image/Logo VIC - cut.png`.
 
 Các link chưa được VIC xác nhận đang để `null`; website sẽ không hiển thị link giả. Các dự án và hoạt động mẫu đều được ghi rõ là nội dung minh họa.
 
@@ -72,47 +81,50 @@ Các link chưa được VIC xác nhận đang để `null`; website sẽ không
 - `/hoc-thuat` và `/hoc-thuat/:slug`.
 - `/thanh-vien/:slug`.
 - `/design-system` và trang 404.
-- `/admin/tuyen-thanh-vien`: quản trị đợt tuyển; local dùng prototype, dữ liệu thật bắt buộc Google Sign-In.
+- `/admin/tuyen-thanh-vien`: quản trị đợt tuyển; khi dùng API thật cần Google Sign-In và email trong allowlist.
 
 Lệnh build tạo thêm `index.html` cho các route mẫu và `404.html`, giúp refresh URL con hoạt động trên hosting tĩnh.
 
 ## Hệ thống tuyển thành viên
 
-Kiến trúc được chọn:
+Kiến trúc hiện tại:
 
 ```text
-React/Vite → Google Apps Script Web App → Google Sheet + MailApp
+React/Vite → Express API → HMAC-signed Google Apps Script → Google Sheet + MailApp
 ```
 
-Google Sheet là nguồn cấu hình và đơn ứng tuyển. Tab ẩn `TrangThaiKyThuat` lưu cooldown, idempotency và rate limit bền vững. Backend dùng `LockService` để không cho hai request đồng thời vượt kiểm tra. Không có credential Google, email secret hoặc admin secret trong frontend.
+React chỉ gọi Express. Express kiểm tra Origin/CORS, kích thước và cấu trúc request, giới hạn theo IP, xác minh admin/Turnstile rồi gọi Apps Script bằng HMAC. Apps Script kiểm tra chữ ký và nonce, xác thực admin lần nữa, kiểm tra form, cooldown 600 giây và idempotency. Đơn cùng email job được ghi trước khi trả kết quả; trigger Apps Script gửi email nền sau đó.
 
-Nếu chưa cấu hình API, `/tham-gia` production hiển thị trạng thái đóng an toàn; local chạy form và admin bằng dữ liệu prototype có ghi chú rõ ràng. Prototype không ghi Sheet và không gửi email.
+Tab ẩn `TrangThaiKyThuat` tiếp tục lưu cooldown/idempotency và lưu hash nonce có hạn để chặn replay; nonce được dọn định kỳ. Không có Apps Script URL, HMAC secret, Turnstile secret, Google credential hay admin secret trong frontend. Google Client ID và Turnstile site key là public config.
+
+Nếu chưa cấu hình `VITE_API_BASE_URL`, `/tham-gia` local dùng dữ liệu prototype có ghi chú; không ghi Sheet và không gửi email. Khi muốn local dùng data thật, chạy Express, cấu hình Apps Script HMAC và đặt API base URL local.
 
 ### Kết nối Google Sheet
 
 1. Mở Sheet VIC: `https://docs.google.com/spreadsheets/d/1CQiNWk2YZxKLlXA3asiB6K6ADqJSWwIFEymM156ol-A/edit`.
-2. Chọn **Extensions → Apps Script** và chép các file trong `apps-script/`.
-3. Làm theo [hướng dẫn backend](apps-script/README.md), chạy `initializeVicRecruitment` một lần và cấp quyền.
-4. Deploy Apps Script dạng Web App. Không công khai quyền chỉnh sửa Sheet.
-5. Sao chép `.env.example` thành `.env.local`, điền URL `/exec` và Google OAuth Client ID.
-6. Khởi động lại Vite hoặc build lại website.
+2. Chọn **Extensions → Apps Script**, cập nhật các file trong `apps-script/`, thêm `EXPRESS_HMAC_SECRET`, `GOOGLE_OAUTH_CLIENT_ID`, `ADMIN_EMAILS` trong Script Properties.
+3. Chạy `initializeVicRecruitment` một lần và cấp quyền.
+4. Chạy `installConfirmationEmailTrigger` một lần để bật hàng đợi gửi email. Cập nhật deployment Web App sang version mới; xem checklist trong [hướng dẫn Apps Script](apps-script/README.md).
+5. Điền `APPS_SCRIPT_URL`, shared HMAC secret và cấu hình Google/admin trong `backend/.env` theo [hướng dẫn backend](backend/README.md).
+6. Cấu hình `VITE_API_BASE_URL` và `VITE_GOOGLE_CLIENT_ID` trong `.env.local`; chạy backend và frontend ở hai terminal.
 
 `is_open` đang là `FALSE`; không đổi thành `TRUE` cho đến khi hoàn tất checklist bên dưới.
 
 ### Email và Turnstile
 
-- Email được gửi bằng `MailApp` của tài khoản triển khai Apps Script. Hãy kiểm tra quota và dùng hộp thư test trước; code không gửi email cho đến khi có lần nộp thật vào API đã cấu hình.
-- Tạo Cloudflare Turnstile widget cho domain website, đặt site key ở `VITE_TURNSTILE_SITE_KEY`, đặt secret ở Script property `TURNSTILE_SECRET_KEY`.
-- Chỉ cấu hình secret sau khi frontend đã có site key tương ứng; backend sẽ từ chối submit thiếu token khi secret tồn tại.
+- Đơn được ghi vào Sheet trước; email xác nhận được gửi nền bằng `MailApp` của tài khoản cài trigger. Dùng hộp thư test và kiểm tra quota.
+- Nếu phản hồi gửi đơn bị mất, form kiểm tra trạng thái bằng mã idempotency và không tự nộp lại. Admin xử lý email `Cần kiểm tra` sau khi xem hộp thư gửi.
+- Tạo Cloudflare Turnstile widget cho hostname website, đặt site key ở `VITE_TURNSTILE_SITE_KEY` và secret ở `TURNSTILE_SECRET_KEY` của Express.
+- Bật `TURNSTILE_REQUIRED=true` sau khi cấu hình hostname/action cho phép; secret không đặt ở frontend hoặc Script Properties.
 
 ### Checklist mở nhận đơn
 
 - Kiểm tra ba tab cấu hình và các label/help text/lựa chọn trên Sheet.
-- Cấu hình `GOOGLE_OAUTH_CLIENT_ID`, `ADMIN_EMAILS` và đăng nhập được trang admin.
+- Cấu hình cùng Google Client ID ở Express và Script Properties; cấu hình `ADMIN_EMAILS` ở cả hai lớp và đăng nhập được trang admin.
 - Kiểm tra form thật vẫn đóng và frontend đọc đúng `form_version`.
 - Gửi đơn bằng email test thuộc `udn.vn`; xác nhận chỉ có một dòng và email nhận đúng.
 - Kiểm tra retry cùng idempotency key và cooldown đủ 10 phút.
-- Cấu hình, kiểm tra Turnstile trên domain production.
+- Cấu hình, kiểm tra Turnstile hostname/action trên domain production.
 - Kiểm tra quota Apps Script/MailApp và kênh liên hệ.
 - Cuối cùng mới đổi `is_open` thành `TRUE` qua trang admin.
 

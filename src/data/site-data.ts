@@ -65,6 +65,12 @@ export const activities: Activity[] = [
     body: ["Đây là nội dung recap minh họa, không khẳng định hoạt động đã diễn ra.", "Khi có thông tin thật, trang có thể bổ sung sản phẩm được giới thiệu, ghi chú chính và album hình ảnh."],
     relatedArticleIds: [], relatedProjectIds: ["community-web", "media-kit"], registrationUrl: null, featured: true, isDemo: true,
   },
+  {
+    id: "activity-open-lab", slug: "open-lab-mau", title: "Open Lab — Từ ý tưởng đến bản thử", summary: "Một buổi cùng phác thảo và làm thử ý tưởng nhỏ, để biến điều đang tò mò thành sản phẩm đầu tiên.",
+    category: "Học tập", type: "Open Lab", status: "undated", date: null, departmentIds: ["learning"],
+    body: ["Đây là hoạt động minh họa cho không gian thực hành mở của VIC.", "Khi có lịch thật, trang có thể cập nhật chủ đề, yêu cầu chuẩn bị và cách đăng ký tham gia."],
+    relatedArticleIds: [], relatedProjectIds: ["community-web"], registrationUrl: null, featured: true, isDemo: true,
+  },
 ];
 
 export const projects: Project[] = [
