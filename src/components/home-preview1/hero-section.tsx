@@ -27,7 +27,7 @@ export function HyperHero() {
         <div className="hyper-hero-lower">
           <p>Những ý tưởng công nghệ được bắt đầu, thử nghiệm và hoàn thiện cùng nhau.</p>
           <div className="hyper-hero-actions">
-            <Link className="hyper-button hyper-button--white" to="/tham-gia">Tìm hiểu cách tham gia <ArrowUpRight size={18} aria-hidden="true" /></Link>
+            <Link className="hyper-button hyper-button--white" to="/tuyen-thanh-vien">Tìm hiểu cách tham gia <ArrowUpRight size={18} aria-hidden="true" /></Link>
             <a className="hyper-link" href="#hyper-about">Khám phá VIC <ArrowDown size={16} aria-hidden="true" /></a>
           </div>
         </div>

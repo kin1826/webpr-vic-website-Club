@@ -24,7 +24,7 @@ export function HomePreviewJoinSection() {
               <h2 id="preview-join-title" className="mt-5 max-w-4xl text-[clamp(2.8rem,7vw,6.2rem)] font-bold leading-[.92] tracking-[-.075em]">Ý tưởng tiếp theo<br />có thể bắt đầu từ bạn.</h2>
               <p className="mt-6 max-w-2xl text-base leading-7 text-white/80">Khám phá các ban và hoạt động, rồi chọn bước tiếp theo phù hợp với mình.</p>
               <motion.div className="mt-8 inline-block" whileHover={reduce ? undefined : { x: 8, scale: 1.035 }} whileTap={reduce ? undefined : { scale: 0.97 }} transition={{ type: "spring", stiffness: 240, damping: 18 }}>
-                <Button asChild variant="light"><Link to="/tham-gia">Đăng ký tham gia VIC <ArrowRight size={17} /></Link></Button>
+                <Button asChild variant="light"><Link to="/tuyen-thanh-vien">Đăng ký tham gia VIC <ArrowRight size={17} /></Link></Button>
               </motion.div>
             </PreviewReveal>
           </div>

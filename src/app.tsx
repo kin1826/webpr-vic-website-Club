@@ -8,6 +8,7 @@ const HomePreview1Page = lazy(() => import("./pages/home-preview1-page").then((m
 const AboutPage = lazy(() => import("./pages/about-page").then((module) => ({ default: module.AboutPage })));
 const DepartmentPage = lazy(() => import("./pages/department-page").then((module) => ({ default: module.DepartmentPage })));
 const JoinPage = lazy(() => import("./pages/join-page").then((module) => ({ default: module.JoinPage })));
+const RecruitmentAnnouncementPage = lazy(() => import("./pages/recruitment-announcement-page").then((module) => ({ default: module.RecruitmentAnnouncementPage })));
 const DesignSystemPage = lazy(() => import("./pages/design-system-page").then((module) => ({ default: module.DesignSystemPage })));
 const NotFoundPage = lazy(() => import("./pages/not-found-page").then((module) => ({ default: module.NotFoundPage })));
 const ActivitiesPage = lazy(() => import("./pages/listing-pages").then((module) => ({ default: module.ActivitiesPage })));
@@ -42,8 +43,11 @@ function PageFallback() {
 
 export function App() {
   const { pathname } = useLocation();
-  const isHomePreview1 = pathname === "/home-preview1";
-  return <><ScrollManager /><a href="#main" className={"fixed left-3 top-3 z-[200] -translate-y-24 rounded-full px-4 py-2 text-sm focus:translate-y-0 " + (isHomePreview1 ? "hyper-skip-link" : "bg-vic-ink text-white")}>Đi đến nội dung chính</a>{!isHomePreview1 && <Header />}<Suspense fallback={<PageFallback />}><Routes>
+  const routePath = pathname.replace(/\/+$/, "") || "/";
+  const isHomePreview1 = routePath === "/home-preview1";
+  const isRecruitmentAnnouncement = routePath === "/tuyen-thanh-vien";
+  const isMinimalChrome = isHomePreview1 || isRecruitmentAnnouncement;
+  return <><ScrollManager /><a href="#main" className={"fixed left-3 top-3 z-[200] -translate-y-24 rounded-full px-4 py-2 text-sm focus:translate-y-0 " + (isHomePreview1 ? "hyper-skip-link" : "bg-vic-ink text-white")}>Đi đến nội dung chính</a>{!isMinimalChrome && <Header />}<Suspense fallback={<PageFallback />}><Routes>
     <Route path="/" element={<HomePreviewPage />} />
     <Route path="/home-preview" element={<HomePreviewPage />} />
     <Route path="/home-preview1" element={<HomePreview1Page />} />
@@ -57,9 +61,10 @@ export function App() {
     <Route path="/hoc-thuat" element={<AcademicsPage />} />
     <Route path="/hoc-thuat/:slug" element={<ArticleDetailPage />} />
     <Route path="/thanh-vien/:slug" element={<MemberDetailPage />} />
+    <Route path="/tuyen-thanh-vien" element={<RecruitmentAnnouncementPage />} />
     <Route path="/tham-gia" element={<JoinPage />} />
     <Route path="/admin/tuyen-thanh-vien" element={<RecruitmentAdminPage />} />
     <Route path="/design-system" element={<DesignSystemPage />} />
     <Route path="*" element={<NotFoundPage />} />
-  </Routes></Suspense>{!isHomePreview1 && <Footer />}</>;
+  </Routes></Suspense>{!isMinimalChrome && <Footer />}</>;
 }

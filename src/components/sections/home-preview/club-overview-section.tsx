@@ -61,7 +61,7 @@ export function ClubOverviewSection() {
                 </li>)}
               </ul>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Button asChild><Link to="/tham-gia">Đăng ký tham gia VIC <ArrowRight size={17} /></Link></Button>
+                <Button asChild><Link to="/tuyen-thanh-vien">Đăng ký tham gia VIC <ArrowRight size={17} /></Link></Button>
                 <Button asChild variant="secondary"><Link to="/gioi-thieu">Tìm hiểu về CLB <ArrowDownRight size={17} /></Link></Button>
               </div>
             </PreviewReveal>

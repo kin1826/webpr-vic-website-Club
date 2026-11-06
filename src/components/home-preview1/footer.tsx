@@ -16,7 +16,7 @@ export function HyperFooter() {
             <Link to="/hoat-dong">Hoạt động <ArrowUpRight size={14} /></Link>
             <Link to="/hoctap">Ban Học tập <ArrowUpRight size={14} /></Link>
             <Link to="/truyenthong">Ban Truyền thông <ArrowUpRight size={14} /></Link>
-            <Link to="/tham-gia">Tham gia <ArrowUpRight size={14} /></Link>
+            <Link to="/tuyen-thanh-vien">Tham gia <ArrowUpRight size={14} /></Link>
           </nav>
         </div>
         <div className="hyper-footer-meta"><span>© {new Date().getFullYear()} VIC · VKU IT Club</span><span>Hyperlab / Home preview 01</span></div>

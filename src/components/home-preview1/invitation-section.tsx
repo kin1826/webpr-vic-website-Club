@@ -17,7 +17,7 @@ export function HyperInvitation() {
             <h2 id="hyper-invitation-title">Điều tiếp theo,<br /><em>cùng làm với VIC.</em></h2>
             <p>Bạn có thể bắt đầu từ một câu hỏi, một ý tưởng hoặc mong muốn tìm người cùng học.</p>
             <motion.div whileHover={enabled ? { x: 5 } : undefined} whileTap={enabled ? { scale: 0.98 } : undefined} transition={{ type: "spring", stiffness: 230, damping: 20 }}>
-              <Link className="hyper-button hyper-button--white" to="/tham-gia">Tìm hiểu cách tham gia <ArrowRight size={17} aria-hidden="true" /></Link>
+              <Link className="hyper-button hyper-button--white" to="/tuyen-thanh-vien">Tìm hiểu cách tham gia <ArrowRight size={17} aria-hidden="true" /></Link>
             </motion.div>
           </Reveal>
           <div className="hyper-invitation-model" aria-hidden="true">
@@ -38,7 +38,7 @@ export function HyperInvitation() {
                 <details className="hyper-faq-item"><summary>{faq.question}<span><Plus size={17} aria-hidden="true" /></span></summary><p>{faq.answer}</p></details>
               </Reveal>
             ))}
-            <Link className="hyper-faq-more" to="/tham-gia">Tìm hiểu cách tham gia <ArrowUpRight size={16} aria-hidden="true" /></Link>
+            <Link className="hyper-faq-more" to="/tuyen-thanh-vien">Tìm hiểu cách tham gia <ArrowUpRight size={16} aria-hidden="true" /></Link>
           </div>
         </div>
       </section>
