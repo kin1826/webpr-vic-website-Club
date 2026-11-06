@@ -38,14 +38,14 @@ export function Header() {
         </div>
         {primaryLinks.slice(1).map((item) => <NavLink key={item.to} to={item.to} className={navClass}>{item.label}</NavLink>)}
       </nav>
-      <Button asChild size="sm" className="ml-auto hidden lg:inline-flex"><Link to="/tham-gia">Tham gia VIC</Link></Button>
+      <Button asChild size="sm" className="ml-auto hidden lg:inline-flex"><Link to="/tuyen-thanh-vien">Tham gia VIC</Link></Button>
       <Button size="icon" className="ml-auto lg:hidden" onClick={() => setMobileOpen((value) => !value)} aria-label={mobileOpen ? "Đóng menu" : "Mở menu"} aria-expanded={mobileOpen} aria-controls="mobile-menu">{mobileOpen ? <X size={20} /> : <Menu size={20} />}</Button>
     </header>
     <AnimatePresence>{mobileOpen && <motion.nav id="mobile-menu" className="glass-surface fixed bottom-4 left-4 right-4 top-[6.2rem] z-40 overflow-y-auto rounded-[1.75rem] bg-white/94 p-4 lg:hidden" aria-label="Điều hướng di động" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
       <NavLink to="/gioi-thieu" className="flex min-h-13 items-center justify-between border-b border-black/10 px-3 font-semibold">Về VIC <span>↘</span></NavLink>
       <p className="px-3 pb-2 pt-5 font-mono text-[.66rem] font-semibold text-vic-muted">CÁC BAN</p>{departmentLinks.map((item) => <NavLink key={item.to} to={item.to} className="flex min-h-12 items-center justify-between rounded-2xl px-4 text-sm font-semibold hover:bg-vic-blue-soft">{item.label}<span>↗</span></NavLink>)}
       <p className="px-3 pb-2 pt-5 font-mono text-[.66rem] font-semibold text-vic-muted">KHÁM PHÁ</p>{[{ label: "Hoạt động", to: "/hoat-dong" }, { label: "Sản phẩm", to: "/san-pham" }, { label: "Học thuật", to: "/hoc-thuat" }].map((item) => <NavLink key={item.to} to={item.to} className="flex min-h-12 items-center justify-between rounded-2xl px-4 text-sm font-semibold hover:bg-vic-blue-soft">{item.label}<span>↗</span></NavLink>)}
-      <Button asChild className="mt-5 w-full"><Link to="/tham-gia">Tham gia VIC</Link></Button>
+        <Button asChild className="mt-5 w-full"><Link to="/tuyen-thanh-vien">Tham gia VIC</Link></Button>
     </motion.nav>}</AnimatePresence>
   </>;
 }

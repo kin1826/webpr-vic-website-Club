@@ -59,7 +59,7 @@ export function HyperNavigation() {
           {links.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
           <MotionControl />
         </nav>
-        <Link className="hyper-nav-cta" to="/tham-gia">Tham gia VIC <ArrowUpRight size={16} aria-hidden="true" /></Link>
+        <Link className="hyper-nav-cta" to="/tuyen-thanh-vien">Tham gia VIC <ArrowUpRight size={16} aria-hidden="true" /></Link>
         <button
           ref={triggerRef}
           type="button"
@@ -75,7 +75,7 @@ export function HyperNavigation() {
       <nav id="hyper-mobile-nav" className="hyper-mobile-nav" aria-label="Điều hướng di động" hidden={!open}>
         {links.map((item) => <a key={item.href} href={item.href} onClick={close}>{item.label}<ArrowDownRight size={16} aria-hidden="true" /></a>)}
         <MotionControl />
-        <Link className="hyper-mobile-cta" to="/tham-gia" onClick={close}>Tìm hiểu cách tham gia <ArrowUpRight size={16} aria-hidden="true" /></Link>
+        <Link className="hyper-mobile-cta" to="/tuyen-thanh-vien" onClick={close}>Tìm hiểu cách tham gia <ArrowUpRight size={16} aria-hidden="true" /></Link>
       </nav>
     </header>
   );

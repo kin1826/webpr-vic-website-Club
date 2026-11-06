@@ -146,7 +146,7 @@ Các tiểu mục dưới đây ghi lại cách `/home-preview` đang kể câu 
 
 - Khối xanh lớn với tiêu đề **“Ý tưởng tiếp theo có thể bắt đầu từ bạn.”**; nền có gradient, quỹ đạo và ánh sáng xoay chậm.
 - Nút **Đăng ký tham gia VIC** nền trắng, chữ đen, có mũi tên. Kiểm tra độ tương phản cả hover và focus để tránh nút trắng mất chữ.
-- CTA dẫn tới `/tham-gia`; phía dưới có ba FAQ trong accordion.
+- CTA cuối trang dẫn tới `/tuyen-thanh-vien`, trang thông báo tuyển thành viên theo từng Gen. Trang form cũ `/tham-gia` vẫn được giữ lại nhưng không còn là đích của CTA tham gia.
 - Footer dùng nền đen, logo sáng, link chữ trắng giảm opacity và các kênh liên hệ đã có dữ liệu.
 
 ## 6. Quy tắc component và trạng thái

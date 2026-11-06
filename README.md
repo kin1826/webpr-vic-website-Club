@@ -77,7 +77,9 @@ Các link chưa được VIC xác nhận đang để `null`; website sẽ không
 
 ## Các route chính
 
-- `/`, `/gioi-thieu`, `/hoctap`, `/truyenthong`, `/tham-gia`.
+- `/`, `/gioi-thieu`, `/hoctap`, `/truyenthong`, `/tuyen-thanh-vien`, `/tham-gia`.
+- `/tuyen-thanh-vien` là trang thông báo tuyển theo từng Gen; chỉnh nội dung và link Google Form trong `src/data/recruitment-announcement.ts`.
+- `/tham-gia` vẫn được giữ nguyên làm trang form tuyển thành viên cũ.
 - `/hoat-dong` và `/hoat-dong/:slug`.
 - `/san-pham` và `/san-pham/:slug`.
 - `/hoc-thuat` và `/hoc-thuat/:slug`.

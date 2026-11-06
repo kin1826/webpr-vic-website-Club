@@ -5,7 +5,7 @@ import { VicLogo } from "../shared/vic-logo";
 
 const footerLinks = [
   { label: "Về VIC", to: "/gioi-thieu" }, { label: "Ban Học tập", to: "/hoctap" }, { label: "Ban Truyền thông", to: "/truyenthong" },
-  { label: "Hoạt động", to: "/hoat-dong" }, { label: "Sản phẩm", to: "/san-pham" }, { label: "Học thuật", to: "/hoc-thuat" }, { label: "Tham gia", to: "/tham-gia" },
+  { label: "Hoạt động", to: "/hoat-dong" }, { label: "Sản phẩm", to: "/san-pham" }, { label: "Học thuật", to: "/hoc-thuat" }, { label: "Tuyển thành viên", to: "/tuyen-thanh-vien" },
 ];
 
 export function Footer() {
