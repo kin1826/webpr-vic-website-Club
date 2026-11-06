@@ -1,4 +1,10 @@
 import type { Activity, Article, ClubSettings, Department, FaqItem, Member, OrganizationPosition, Project } from "../types/content-model";
+import presidentPoster from "../assets/leadership/President.webp";
+import vicePresidentPoster from "../assets/leadership/Vice-President.webp";
+import learningHeadPoster from "../assets/leadership/HeadOfAC.webp";
+import learningDeputyPoster from "../assets/leadership/DeputyHeadOfAC.webp";
+import mediaHeadPoster from "../assets/leadership/HeadOfCommunication.webp";
+import mediaDeputyPoster from "../assets/leadership/DeputyHeadOfComunication.webp";
 
 export const departments: Department[] = [
   {
@@ -14,9 +20,9 @@ export const departments: Department[] = [
     ],
   },
   {
-    id: "media", slug: "truyenthong", name: "Ban Truyền thông", shortName: "Truyền thông",
+    id: "media", slug: "truyenthong", name: "Ban Truyền thông & Sự kiện", shortName: "Truyền thông & Sự kiện",
     summary: "Không gian phát triển nội dung, thiết kế, hình ảnh và cách kể câu chuyện của VIC.",
-    description: "Ban Truyền thông giúp những giá trị và hành trình của VIC được thể hiện rõ ràng qua nội dung, thiết kế và media. Đây cũng là nơi thành viên luyện cách biến thông tin thành trải nghiệm dễ hiểu, gần gũi.",
+    description: "Ban Truyền thông & Sự kiện giúp những giá trị và hành trình của VIC được thể hiện rõ ràng qua nội dung, thiết kế, hình ảnh và các sự kiện. Đây cũng là nơi thành viên luyện cách biến thông tin thành trải nghiệm dễ hiểu, gần gũi.",
     tags: ["Nội dung", "Thiết kế", "Media"],
     directions: [
       { title: "Nội dung", description: "Lên ý tưởng, viết và biên tập thông tin cho những kênh phù hợp." },
@@ -29,6 +35,36 @@ export const departments: Department[] = [
 
 export const members: Member[] = [
   {
+    id: "tran-van-bang", slug: "tran-van-bang", name: "Trần Văn Bằng", role: "Chủ nhiệm VIC", departmentId: null,
+    summary: "", interests: [], contributions: [], projectIds: [], articleIds: [], portfolioUrl: "https://tvbang.io.vn", socialUrl: null, isDemo: false,
+    academicYear: "K24", major: "Công nghệ Thông tin - Công nghệ Game", faculty: "Khoa học máy tính", school: "Đại học Công nghệ thông tin và Truyền thông Việt Hàn - VKU", poster: presidentPoster, accentColor: "#c30000", accentTextColor: "#b50000",
+  },
+  {
+    id: "nguyen-ngoc-bin", slug: "nguyen-ngoc-bin", name: "Nguyễn Ngọc Bin", role: "Phó Chủ nhiệm VIC", departmentId: null,
+    summary: "", interests: [], contributions: [], projectIds: [], articleIds: [], portfolioUrl: null, socialUrl: null, isDemo: false,
+    academicYear: "K25", major: "Công nghệ Thông tin - Công nghệ Phần mềm", faculty: "Khoa học máy tính", school: "Đại học Công nghệ thông tin và Truyền thông Việt Hàn - VKU", poster: vicePresidentPoster, accentColor: "#31b9ea", accentTextColor: "#006f98",
+  },
+  {
+    id: "nguyen-anh-tu", slug: "nguyen-anh-tu", name: "Nguyễn Anh Tú", role: "Trưởng Ban Học tập VIC", departmentId: "learning",
+    summary: "", interests: [], contributions: [], projectIds: [], articleIds: [], portfolioUrl: null, socialUrl: null, isDemo: false,
+    academicYear: "K25", major: "Công nghệ Thông tin - Công nghệ Phần mềm", faculty: "Khoa học máy tính", school: "Đại học Công nghệ thông tin và Truyền thông Việt Hàn - VKU", poster: learningHeadPoster, accentColor: "#087763", accentTextColor: "#06715c",
+  },
+  {
+    id: "dinh-hoang-vu", slug: "dinh-hoang-vu", name: "Đinh Hoàng Vũ", role: "Phó Ban Học tập VIC", departmentId: "learning",
+    summary: "", interests: [], contributions: [], projectIds: [], articleIds: [], portfolioUrl: null, socialUrl: null, isDemo: false,
+    academicYear: "K25", major: "Công nghệ Thông tin - Công nghệ Phần mềm", faculty: "Khoa học máy tính", school: "Đại học Công nghệ thông tin và Truyền thông Việt Hàn - VKU", poster: learningDeputyPoster, accentColor: "#a40b9e", accentTextColor: "#850079",
+  },
+  {
+    id: "nguyen-xuan-duc", slug: "nguyen-xuan-duc", name: "Nguyễn Xuân Đức", role: "Trưởng Ban Truyền thông & Sự kiện VIC", departmentId: "media",
+    summary: "", interests: [], contributions: [], projectIds: [], articleIds: [], portfolioUrl: null, socialUrl: null, isDemo: false,
+    academicYear: "K25", major: "Công nghệ Thông tin - Công nghệ Phần mềm", faculty: "Khoa học máy tính", school: "Đại học Công nghệ thông tin và Truyền thông Việt Hàn - VKU", poster: mediaHeadPoster, accentColor: "#e31386", accentTextColor: "#c20b73",
+  },
+  {
+    id: "dang-thi-truc-quyen", slug: "dang-thi-truc-quyen", name: "Đặng Thị Trúc Quyên", role: "Phó Ban Truyền thông & Sự kiện VIC", departmentId: "media",
+    summary: "", interests: [], contributions: [], projectIds: [], articleIds: [], portfolioUrl: null, socialUrl: null, isDemo: false,
+    academicYear: "K25", major: "MT", faculty: "Khoa học máy tính", school: "Đại học Công nghệ thông tin và Truyền thông Việt Hàn - VKU", poster: mediaDeputyPoster, accentColor: "#fcd25d", accentTextColor: "#866100",
+  },
+  {
     id: "member-sample", slug: "ho-so-thanh-vien-mau", name: "Hồ sơ thành viên mẫu", role: "Dữ liệu minh họa", departmentId: null,
     summary: "Template minh họa cách một thành viên có thể giới thiệu hành trình học tập, đóng góp và sản phẩm của mình tại VIC.",
     interests: ["Phát triển sản phẩm", "Thiết kế trải nghiệm", "Chia sẻ kiến thức"],
@@ -38,12 +74,12 @@ export const members: Member[] = [
 ];
 
 export const organizationPositions: OrganizationPosition[] = [
-  { id: "chair", title: "Chủ nhiệm", departmentId: null, memberId: null, note: "Nhân sự sẽ được cập nhật" },
-  { id: "vice-chair", title: "Phó Chủ nhiệm", departmentId: null, memberId: null, note: "Số lượng theo dữ liệu chính thức" },
-  { id: "learning-lead", title: "Trưởng Ban Học tập", departmentId: "learning", memberId: null, note: "Thông tin đang được cập nhật" },
-  { id: "learning-deputy", title: "Phó Ban Học tập", departmentId: "learning", memberId: null, note: "Số lượng theo dữ liệu chính thức" },
-  { id: "media-lead", title: "Trưởng Ban Truyền thông", departmentId: "media", memberId: null, note: "Thông tin đang được cập nhật" },
-  { id: "media-deputy", title: "Phó Ban Truyền thông", departmentId: "media", memberId: null, note: "Số lượng theo dữ liệu chính thức" },
+  { id: "chair", title: "Chủ nhiệm", departmentId: null, memberId: "tran-van-bang", note: "" },
+  { id: "vice-chair", title: "Phó Chủ nhiệm", departmentId: null, memberId: "nguyen-ngoc-bin", note: "" },
+  { id: "learning-lead", title: "Trưởng Ban Học tập", departmentId: "learning", memberId: "nguyen-anh-tu", note: "" },
+  { id: "learning-deputy", title: "Phó Ban Học tập", departmentId: "learning", memberId: "dinh-hoang-vu", note: "" },
+  { id: "media-lead", title: "Trưởng Ban Truyền thông & Sự kiện", departmentId: "media", memberId: "nguyen-xuan-duc", note: "" },
+  { id: "media-deputy", title: "Phó Ban Truyền thông & Sự kiện", departmentId: "media", memberId: "dang-thi-truc-quyen", note: "" },
 ];
 
 export const activities: Activity[] = [

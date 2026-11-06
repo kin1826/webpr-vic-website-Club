@@ -30,6 +30,14 @@ export type Member = {
   portfolioUrl: string | null;
   socialUrl: string | null;
   isDemo: boolean;
+  academicYear?: string;
+  major?: string;
+  faculty?: string;
+  school?: string;
+  slogan?: string;
+  poster?: string;
+  accentColor?: string;
+  accentTextColor?: string;
 };
 
 export type OrganizationPosition = {

@@ -12,3 +12,16 @@ export type ClubOverviewContent = {
   values: string[];
   editorialNote: string;
 };
+
+export type HomeActivityGroup = {
+  id: "tech-sharing" | "mini-hackathon" | "creative-studio" | "extracurricular";
+  number: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  tags: string[];
+  icon: "presentation" | "code" | "camera" | "compass";
+  cover: string;
+  coverAlt: string;
+  imagePosition: string;
+};

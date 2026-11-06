@@ -9,9 +9,9 @@ export const teams: Team[] = [
     tags: ["Lập trình", "Thực hành", "Dự án"],
   },
   {
-    id: "media", name: "Ban Truyền thông", icon: Megaphone,
-    description: "Kể câu chuyện của VIC bằng nội dung, thiết kế và hình ảnh. Cùng ghi lại hành trình của CLB và đưa những giá trị ấy đến nhiều người hơn.",
-    focuses: ["Viết nội dung", "Thiết kế hình ảnh", "Chụp ảnh, quay dựng", "Truyền thông hoạt động"],
+    id: "media", name: "Ban Truyền thông & Sự kiện", icon: Megaphone,
+    description: "Kể câu chuyện của VIC bằng nội dung, thiết kế, hình ảnh và các sự kiện. Cùng ghi lại hành trình của CLB và đưa những giá trị ấy đến nhiều người hơn.",
+    focuses: ["Viết nội dung", "Thiết kế hình ảnh", "Chụp ảnh, quay dựng", "Truyền thông và tổ chức sự kiện"],
     tags: ["Nội dung", "Thiết kế", "Media"],
   },
 ];
@@ -30,7 +30,7 @@ export const projects: Project[] = [
 
 export const faqs: FaqItem[] = [
   { id: "beginner", question: "Chưa giỏi lập trình có tham gia được không?", answer: "Bạn có thể bắt đầu từ tinh thần muốn học hỏi. Yêu cầu cụ thể sẽ tùy từng đợt tuyển và hoạt động của VIC." },
-  { id: "teams", question: "Ban Học tập và Ban Truyền thông khác nhau thế nào?", answer: "Ban Học tập tập trung vào công nghệ, lập trình và phát triển sản phẩm. Ban Truyền thông kể câu chuyện của VIC qua nội dung, thiết kế, hình ảnh và media." },
+  { id: "teams", question: "Ban Học tập và Ban Truyền thông & Sự kiện khác nhau thế nào?", answer: "Ban Học tập tập trung vào công nghệ, lập trình và phát triển sản phẩm. Ban Truyền thông & Sự kiện kể câu chuyện VIC qua nội dung, thiết kế, hình ảnh và các hoạt động." },
   { id: "schedule", question: "CLB sinh hoạt khi nào?", answer: "Lịch cụ thể sẽ được cập nhật qua kênh thông tin chính thức của VIC." },
   { id: "recruitment", question: "Khi nào VIC tuyển thành viên?", answer: "Thông tin từng đợt tuyển sẽ được công bố trên kênh chính thức của VIC." },
 ];
