@@ -39,7 +39,7 @@ export function HyperOrganization() {
             })}
           </div>
         </div>
-        <p className="hyper-editor-note">Sơ đồ hiển thị chức danh theo dữ liệu hiện có; nhân sự sẽ được cập nhật khi được xác nhận.</p>
+        <p className="hyper-editor-note">Ban Chủ nhiệm và các ban hiển thị theo dữ liệu nhân sự VIC đã xác nhận.</p>
       </div>
     </section>
   );

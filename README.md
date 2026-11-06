@@ -65,7 +65,9 @@ backend/
 
 ## Chỉnh sửa nội dung
 
-- Thông tin ban, nhân sự, chức danh, hoạt động, sản phẩm, bài viết và FAQ: `src/data/site-data.ts`.
+- Thông tin ban, nhân sự, hoạt động chi tiết, sản phẩm, bài viết và FAQ: `src/data/site-data.ts`.
+- Bốn nhóm hoạt động ở trang chủ: `src/data/home-activity-groups.ts`. Ảnh web dùng `cover.webp` trong từng thư mục `image/activities/`, được nén từ `cover.png`; khi thay ảnh, tạo lại WebP bằng `cwebp -m 6 -q 82 -resize 1600 0 image/activities/tech-sharing-2026/cover.png -o image/activities/tech-sharing-2026/cover.webp` (đổi đường dẫn theo nhóm). Ảnh nền workshop dùng `image/vic-workshop-2526.webp`, tạo từ file PNG cùng tên.
+- Hồ sơ sáu thành viên Ban Chủ nhiệm và các ban: cập nhật trường dữ liệu tương ứng trong `members`; thông tin tùy chọn chưa có sẽ tự ẩn. Poster gốc nằm trong `image/image-bcn/`, bản WebP dùng trên web trong `src/assets/leadership/`. Khi thay poster, tạo lại bản WebP cùng tên bằng `cwebp -q 82 -resize 960 960 image/image-bcn/President.png -o src/assets/leadership/President.webp` (thay tên file theo người).
 - Facebook, email, GitHub, trạng thái tuyển và form đăng ký: `clubSettings` trong `src/data/site-data.ts`.
 - Kiểu dữ liệu và quan hệ ID: `src/types/content-model.ts`.
 - Màu sắc, font, radius và shadow: `src/styles/globals.css`.

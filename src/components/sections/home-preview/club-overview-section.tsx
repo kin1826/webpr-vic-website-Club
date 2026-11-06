@@ -3,6 +3,7 @@ import { ArrowDownRight, ArrowRight, MoveUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, useInView, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { homePreviewContent } from "../../../data/home-preview-content";
+import workshopBackground from "../../../../image/vic-workshop-2526.webp";
 import { Button } from "../../ui/button";
 import { PreviewReveal } from "./preview-reveal";
 
@@ -28,6 +29,7 @@ export function ClubOverviewSection() {
 
   return (
     <section ref={sectionRef} data-preview-visible={isVisible} id="about" className="home-preview-overview section-space scroll-mt-28 overflow-hidden" aria-labelledby="preview-about-title">
+      <div className="home-preview-overview-photo" style={{ backgroundImage: `url(${workshopBackground})` }} aria-hidden="true" />
       <span className="home-preview-overview-light home-preview-overview-light-b" aria-hidden="true" />
       <span className="home-preview-overview-light home-preview-overview-light-a" aria-hidden="true" />
       <div className="page-container">
