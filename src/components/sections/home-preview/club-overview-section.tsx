@@ -5,9 +5,10 @@ import { motion, useInView, useMotionValue, useReducedMotion, useScroll, useSpri
 import { homePreviewContent } from "../../../data/home-preview-content";
 import workshopBackground from "../../../../image/vic-workshop-2526.webp";
 import { Button } from "../../ui/button";
+import { MagneticCta } from "../../home-color-preview/lucian/magnetic-cta";
 import { PreviewReveal } from "./preview-reveal";
 
-export function ClubOverviewSection() {
+export function ClubOverviewSection({ recruitmentPath = "/tuyen-thanh-vien", magneticCta = false }: { recruitmentPath?: string; magneticCta?: boolean }) {
   const content = homePreviewContent;
   const sectionRef = useRef<HTMLElement>(null);
   const isVisible = useInView(sectionRef, { amount: 0.01, margin: "96px 0px" });
@@ -61,7 +62,7 @@ export function ClubOverviewSection() {
                 </li>)}
               </ul>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Button asChild><Link to="/tuyen-thanh-vien">Đăng ký tham gia VIC <ArrowRight size={17} /></Link></Button>
+                {magneticCta ? <MagneticCta to={recruitmentPath} label="Tham gia VIC" compact /> : <Button asChild><Link to={recruitmentPath}>Đăng ký tham gia VIC <ArrowRight size={17} /></Link></Button>}
                 <Button asChild variant="secondary"><Link to="/gioi-thieu">Tìm hiểu về CLB <ArrowDownRight size={17} /></Link></Button>
               </div>
             </PreviewReveal>

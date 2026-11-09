@@ -1,8 +1,8 @@
-import { ArrowDownRight, ArrowUpRight, Menu, Pause, Play, X } from "lucide-react";
-import { useEffect, useId, useRef, useState } from "react";
+import { ArrowDownRight, ArrowUpRight, Menu, Moon, Sun, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { VicLogo } from "../shared/vic-logo";
-import { useHyperMotion } from "./motion-context";
+import type { HeroTheme } from "./theme-types";
 
 const links = [
   { label: "Về VIC", href: "#hyper-about" },
@@ -11,26 +11,7 @@ const links = [
   { label: "Cơ cấu", href: "#hyper-organization" },
 ];
 
-function MotionControl() {
-  const { enabled, prefersReduced, toggle } = useHyperMotion();
-  const id = useId();
-  return (
-    <button
-      type="button"
-      className="hyper-motion-control"
-      aria-pressed={enabled}
-      aria-describedby={prefersReduced ? id : undefined}
-      disabled={prefersReduced}
-      onClick={toggle}
-    >
-      {enabled ? <Pause size={15} aria-hidden="true" /> : <Play size={15} aria-hidden="true" />}
-      <span>{prefersReduced ? "Theo cài đặt giảm chuyển động" : enabled ? "Tạm dừng chuyển động" : "Bật chuyển động"}</span>
-      {prefersReduced && <span id={id} className="hyper-sr-only">Thiết bị đang ưu tiên giảm chuyển động.</span>}
-    </button>
-  );
-}
-
-export function HyperNavigation() {
+export function HyperNavigation({ theme, onThemeToggle }: { theme: HeroTheme; onThemeToggle: (button: HTMLButtonElement) => void }) {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -51,15 +32,24 @@ export function HyperNavigation() {
   return (
     <header className="hyper-header">
       <div className="hyper-nav-inner">
-        <a className="hyper-brand" href="#hyper-top" aria-label="VIC — về đầu trang">
+        <a className="hyper-brand" href="#top" aria-label="VIC — về đầu trang">
           <VicLogo className="hyper-brand-logo" />
           <span><strong>VKU IT CLUB</strong><small>Học · Làm · Chia sẻ</small></span>
         </a>
         <nav className="hyper-desktop-nav" aria-label="Điều hướng chính">
           {links.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
-          <MotionControl />
         </nav>
-        <Link className="hyper-nav-cta" to="/tuyen-thanh-vien">Tham gia VIC <ArrowUpRight size={16} aria-hidden="true" /></Link>
+        <button
+          type="button"
+          className="hyper-theme-toggle"
+          aria-label={theme === "dark" ? "Chuyển hero sang giao diện sáng" : "Chuyển hero sang giao diện tối"}
+          aria-pressed={theme === "dark"}
+          onClick={(event) => onThemeToggle(event.currentTarget)}
+        >
+          {theme === "dark" ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
+          <span className="hyper-sr-only">Giao diện {theme === "dark" ? "tối" : "sáng"}</span>
+        </button>
+        <Link className="hyper-nav-cta" to="/tuyen-thanh-vien-preview">Tham gia VIC <ArrowUpRight size={16} aria-hidden="true" /></Link>
         <button
           ref={triggerRef}
           type="button"
@@ -74,8 +64,7 @@ export function HyperNavigation() {
       </div>
       <nav id="hyper-mobile-nav" className="hyper-mobile-nav" aria-label="Điều hướng di động" hidden={!open}>
         {links.map((item) => <a key={item.href} href={item.href} onClick={close}>{item.label}<ArrowDownRight size={16} aria-hidden="true" /></a>)}
-        <MotionControl />
-        <Link className="hyper-mobile-cta" to="/tuyen-thanh-vien" onClick={close}>Tìm hiểu cách tham gia <ArrowUpRight size={16} aria-hidden="true" /></Link>
+        <Link className="hyper-mobile-cta" to="/tuyen-thanh-vien-preview" onClick={close}>Tìm hiểu cách tham gia <ArrowUpRight size={16} aria-hidden="true" /></Link>
       </nav>
     </header>
   );

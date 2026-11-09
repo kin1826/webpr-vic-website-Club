@@ -31,14 +31,13 @@ function RibbonTrack({
   );
 }
 
-export function TransitionRibbon({ motionEnabled }: { motionEnabled: boolean }) {
+export function TransitionRibbon() {
   const { ref, isVisible } = usePreviewVisibility<HTMLElement>();
 
   return (
     <section
       ref={ref}
       data-preview-visible={isVisible}
-      data-motion={motionEnabled ? "on" : "off"}
       className="home-preview-transition"
       aria-hidden="true"
     >

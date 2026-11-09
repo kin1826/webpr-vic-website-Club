@@ -1,0 +1,75 @@
+/* Shared palette for the isolated home and recruitment color previews. */
+[data-vic-theme="home-demo01"] {
+  --demo-bg: #030407;
+  --demo-surface: #0c111b;
+  --demo-surface-raised: #141d2b;
+  --demo-blue: #1558c9;
+  --demo-blue-deep: #0a2452;
+  --demo-lime: #d4ff24;
+  --demo-text: #f3f6fb;
+  --demo-muted: #acb7c9;
+  --demo-line: rgba(243, 246, 251, .14);
+  --demo-glass: rgba(12, 17, 27, .84);
+
+  --vic-bg: var(--demo-bg);
+  --vic-surface: var(--demo-surface);
+  --vic-ink: var(--demo-bg);
+  --vic-muted: var(--demo-muted);
+  --vic-blue: var(--demo-blue);
+  --vic-blue-soft: #122242;
+  --vic-line: var(--demo-line);
+  --vic-grid: rgba(215, 225, 245, .14);
+  --vic-glass: var(--demo-glass);
+  --vic-glass-strong: rgba(12, 17, 27, .94);
+  --vic-shadow: 0 20px 70px rgba(0, 0, 0, .44), inset 0 1px 0 rgba(243, 246, 251, .1);
+  --color-vic-bg: var(--demo-bg);
+  --color-vic-surface: var(--demo-surface);
+  --color-vic-ink: var(--demo-bg);
+  --color-vic-muted: var(--demo-muted);
+  --color-vic-blue: var(--demo-lime);
+  --color-vic-blue-soft: #122242;
+  --shadow-glass: var(--vic-shadow);
+
+  color: var(--demo-text);
+  background-color: var(--demo-bg);
+  color-scheme: dark;
+}
+
+[data-vic-theme="home-demo01"] .text-vic-ink { color: var(--demo-text); }
+[data-vic-theme="home-demo01"] .text-vic-muted { color: var(--demo-muted); }
+[data-vic-theme="home-demo01"] .text-vic-blue-soft { color: var(--demo-lime); }
+[data-vic-theme="home-demo01"] .bg-vic-blue { background-color: var(--demo-blue); }
+[data-vic-theme="home-demo01"] .bg-vic-blue-soft { background-color: #122242; }
+[data-vic-theme="home-demo01"] .bg-vic-surface { background-color: var(--demo-surface); }
+[data-vic-theme="home-demo01"] .bg-vic-ink { background-color: var(--demo-bg); }
+[data-vic-theme="home-demo01"] .text-vic-blue { color: var(--demo-lime); }
+[data-vic-theme="home-demo01"] .border-black\/10 { border-color: var(--demo-line); }
+[data-vic-theme="home-demo01"] .border-black\/[\.07] { border-color: rgba(243, 246, 251, .1); }
+[data-vic-theme="home-demo01"] .glass-surface { border-color: rgba(243, 246, 251, .18); background-color: var(--demo-glass); box-shadow: var(--vic-shadow); }
+[data-vic-theme="home-demo01"] img.logo-blend { filter: brightness(0) invert(1); mix-blend-mode: screen; }
+[data-vic-theme="home-demo01"] .section-label { color: var(--demo-lime); }
+[data-vic-theme="home-demo01"] :focus-visible { outline-color: rgba(212, 255, 36, .78); }
+[data-vic-theme="home-demo01"] a.bg-vic-ink,
+[data-vic-theme="home-demo01"] button.bg-vic-ink { background-color: var(--demo-lime); color: var(--demo-bg) !important; }
+[data-vic-theme="home-demo01"] a.bg-vic-ink:hover,
+[data-vic-theme="home-demo01"] button.bg-vic-ink:hover { background-color: #c6f11f; color: var(--demo-bg) !important; }
+
+/* The existing light-paper utility surfaces become dark glass only in the previews. */
+.vic-color-preview .bg-white { background-color: var(--demo-surface); }
+.vic-color-preview .bg-white\/85 { background-color: rgba(243, 246, 251, .94); }
+.vic-color-preview .bg-white\/70 { background-color: rgba(12, 17, 27, .7); }
+.vic-color-preview .bg-white\/80 { background-color: rgba(12, 17, 27, .8); }
+.vic-color-preview .bg-white\/88 { background-color: rgba(12, 17, 27, .88); }
+.vic-color-preview .bg-white\/90 { background-color: rgba(12, 17, 27, .9); }
+.vic-color-preview .bg-white\/92 { background-color: rgba(12, 17, 27, .92); }
+.vic-color-preview .bg-white\/94 { background-color: rgba(12, 17, 27, .94); }
+.vic-color-preview .bg-white\/96 { background-color: rgba(12, 17, 27, .96); }
+.vic-color-preview .home-preview-final-note a.bg-white { background-color: var(--demo-lime); color: var(--demo-bg); }
+.vic-color-preview .home-preview-final-note a.bg-white:hover { background-color: #c6f11f; color: var(--demo-bg); }
+.vic-color-preview .home-preview-activity-card .bg-white\/85 { color: var(--demo-bg); }
+
+/* Shared member dialog is rendered through a portal, so its own theme attribute scopes it. */
+[data-vic-theme="home-demo01"].glass-surface { border-color: var(--demo-line); background-color: rgba(12, 17, 27, .97); color: var(--demo-text); }
+[data-vic-theme="home-demo01"] .bg-vic-surface { background-color: var(--demo-surface-raised); }
+[data-vic-theme="home-demo01"] .bg-vic-blue-soft { color: var(--demo-lime); }
+[data-vic-theme="home-demo01"] .bg-vic-blue { color: var(--demo-text); }

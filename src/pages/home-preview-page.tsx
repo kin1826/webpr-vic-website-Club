@@ -6,13 +6,12 @@ import { OrganizationPreviewSection } from "../components/sections/home-preview/
 import { TransitionRibbon } from "../components/sections/home-preview/transition-ribbon";
 import { HeroSection } from "../components/sections/hero-section";
 import { useEffect, useState } from "react";
-import { useReducedMotion } from "motion/react";
+import type { RefObject } from "react";
 import "../styles/home-preview.css";
+import type { InteractiveGridHandle, InteractiveGridPalette } from "../components/shared/interactive-grid";
 
-export function HomePreviewPage() {
+export function HomePreviewPage({ recruitmentPath = "/tuyen-thanh-vien", gridPalette, colorPreview = false, lucianInteractions = false, magneticCtas = false, heroRef, gridRef }: { recruitmentPath?: string; gridPalette?: InteractiveGridPalette; colorPreview?: boolean; lucianInteractions?: boolean; magneticCtas?: boolean; heroRef?: RefObject<HTMLElement | null>; gridRef?: RefObject<InteractiveGridHandle | null> }) {
   const [pageVisible, setPageVisible] = useState(() => document.visibilityState === "visible");
-  const reduce = useReducedMotion();
-  const [motionEnabled, setMotionEnabled] = useState(!reduce);
 
   useEffect(() => {
     const updateVisibility = () => setPageVisible(document.visibilityState === "visible");
@@ -22,13 +21,13 @@ export function HomePreviewPage() {
 
   return (
     <main id="main" data-page-visible={pageVisible} className="home-preview-motion">
-      <HeroSection motionEnabled={motionEnabled} onToggleMotion={() => setMotionEnabled((value) => !value)} />
-      <TransitionRibbon motionEnabled={motionEnabled} />
-      <ClubOverviewSection />
-      <FeaturedActivitiesSection />
+      <HeroSection recruitmentPath={recruitmentPath} gridPalette={gridPalette} magneticCta={magneticCtas} heroRef={heroRef} gridRef={gridRef} />
+      <TransitionRibbon />
+      <ClubOverviewSection recruitmentPath={recruitmentPath} magneticCta={magneticCtas} />
+      <FeaturedActivitiesSection coordinatedHover={lucianInteractions} />
       <DepartmentsOverviewSection />
-      <OrganizationPreviewSection />
-      <HomePreviewJoinSection />
+      <OrganizationPreviewSection colorPreview={colorPreview} />
+      <HomePreviewJoinSection recruitmentPath={recruitmentPath} lucianInteractions={lucianInteractions} />
     </main>
   );
 }

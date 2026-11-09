@@ -7,7 +7,7 @@ const routes = [
   "hoc-thuat", "hoc-thuat/chia-nho-y-tuong", "hoc-thuat/checklist-ban-giao", "hoc-thuat/ghi-lai-dieu-da-hoc",
   "thanh-vien/ho-so-thanh-vien-mau", "thanh-vien/tran-van-bang", "thanh-vien/nguyen-ngoc-bin",
   "thanh-vien/nguyen-anh-tu", "thanh-vien/dinh-hoang-vu", "thanh-vien/nguyen-xuan-duc", "thanh-vien/dang-thi-truc-quyen",
-  "tuyen-thanh-vien", "tham-gia", "admin/tuyen-thanh-vien",
+  "tuyen-thanh-vien", "tuyen-thanh-vien-preview", "tham-gia", "admin/tuyen-thanh-vien", "default",
 ];
 
 await Promise.all(routes.map(async (route) => {

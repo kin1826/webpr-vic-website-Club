@@ -7,9 +7,9 @@ import { cn } from "../../lib/utils";
 export const Dialog = DialogPrimitive.Root;
 export const DialogTrigger = DialogPrimitive.Trigger;
 
-type DialogContentProps = { children: ReactNode; className?: string; title: string; description?: string; position?: "center" | "right" };
+type DialogContentProps = { children: ReactNode; className?: string; title: string; description?: string; position?: "center" | "right"; colorTheme?: string };
 
-export function DialogContent({ children, className, title, description, position = "center" }: DialogContentProps) {
+export function DialogContent({ children, className, title, description, position = "center", colorTheme }: DialogContentProps) {
   const isRightPanel = position === "right";
   const placement = isRightPanel
     ? "glass-surface fixed inset-y-0 right-0 z-[121] flex h-[100dvh] w-full flex-col overflow-hidden rounded-none bg-white/96 shadow-[-24px_0_90px_rgba(0,0,0,.2)] md:w-[min(100%,42rem)] md:rounded-l-[2rem]"
@@ -24,6 +24,7 @@ export function DialogContent({ children, className, title, description, positio
           <motion.div
             initial={isRightPanel ? { opacity: 0, x: 36 } : { opacity: 0, y: 22, scale: .97 }} animate={isRightPanel ? { opacity: 1, x: 0 } : { opacity: 1, y: 0, scale: 1 }} exit={isRightPanel ? { opacity: 0, x: 28 } : { opacity: 0, y: 10, scale: .98 }} transition={{ duration: .28, ease: [.22, 1, .36, 1] }}
             className={cn(placement, className)}
+            data-vic-theme={colorTheme}
           >
             <div className={isRightPanel ? "shrink-0 px-6 pb-5 pr-16 pt-7 md:px-8 md:pr-16" : "pr-12"}>
               <p className="mb-3 font-mono text-xs font-semibold tracking-wider text-vic-blue">VIC / THÔNG TIN</p>

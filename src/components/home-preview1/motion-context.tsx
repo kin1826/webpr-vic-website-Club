@@ -3,18 +3,15 @@ import { useReducedMotion } from "motion/react";
 
 type MotionState = {
   enabled: boolean;
-  prefersReduced: boolean;
-  toggle: () => void;
 };
 
 const MotionContext = createContext<MotionState | null>(null);
 
 export function MotionProvider({ children }: { children: ReactNode }) {
   const systemPreference = useReducedMotion();
-  const [manualEnabled, setManualEnabled] = useState(true);
   const [pageVisible, setPageVisible] = useState(true);
   const prefersReduced = Boolean(systemPreference);
-  const enabled = manualEnabled && !prefersReduced && pageVisible;
+  const enabled = !prefersReduced && pageVisible;
 
   useEffect(() => {
     const syncVisibility = () => setPageVisible(document.visibilityState === "visible");
@@ -28,11 +25,7 @@ export function MotionProvider({ children }: { children: ReactNode }) {
     return () => { delete document.documentElement.dataset.hyperMotion; };
   }, [enabled]);
 
-  const value = useMemo(() => ({
-    enabled,
-    prefersReduced,
-    toggle: () => setManualEnabled((enabled) => !enabled),
-  }), [enabled, manualEnabled, prefersReduced]);
+  const value = useMemo(() => ({ enabled }), [enabled]);
 
   return <MotionContext.Provider value={value}>{children}</MotionContext.Provider>;
 }

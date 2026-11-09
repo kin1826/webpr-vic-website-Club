@@ -1,18 +1,18 @@
 import { ArrowUpRight, CalendarDays, MousePointer2, Sparkles, UsersRound } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { Link } from "react-router-dom";
-import workshopImage from "../../image/vic-workshop-2526.webp";
+import recruitmentImage from "../../image/vic-tuyensinh-gen4.webp";
 import { recruitmentAnnouncement } from "../data/recruitment-announcement";
 import { VicLogo } from "../components/shared/vic-logo";
 import "../styles/recruitment-announcement.css";
 
-export function RecruitmentAnnouncementPage() {
+export function RecruitmentAnnouncementPage({ colorPreview = false, homePath = "/" }: { colorPreview?: boolean; homePath?: string }) {
   const reduceMotion = useReducedMotion();
   const { generation, audience, introduction, departments, deadline, applicationUrl } = recruitmentAnnouncement;
   const generationLabel = String(generation).padStart(2, "0");
 
   return (
-    <main id="main" className="recruitment-page">
+    <main id="main" className="recruitment-page" data-vic-theme={colorPreview ? "home-demo01" : undefined}>
       <div className="recruitment-page-glow recruitment-page-glow--one" aria-hidden="true" />
       <div className="recruitment-page-glow recruitment-page-glow--two" aria-hidden="true" />
 
@@ -23,11 +23,11 @@ export function RecruitmentAnnouncementPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
-          <Link to="/" className="recruitment-brand" aria-label="VIC — về trang chủ">
+          <Link to={homePath} className="recruitment-brand" aria-label="VIC — về trang chủ">
             <VicLogo className="w-[4.5rem]" />
             <span><strong>VKU IT CLUB</strong><small>WE DREAM IT. WE MAKE IT.</small></span>
           </Link>
-          <Link className="recruitment-home-link" to="/"><span>Về trang chủ</span><ArrowUpRight size={16} aria-hidden="true" /></Link>
+          <Link className="recruitment-home-link" to={homePath}><span>Về trang chủ</span><ArrowUpRight size={16} aria-hidden="true" /></Link>
         </motion.header>
 
         <motion.section
@@ -106,7 +106,7 @@ export function RecruitmentAnnouncementPage() {
             <div className="recruitment-orbit recruitment-orbit--outer" aria-hidden="true" />
             <div className="recruitment-orbit recruitment-orbit--inner" aria-hidden="true" />
             <div className="recruitment-photo-frame">
-              <img src={workshopImage} alt="Các thành viên VIC cùng tham gia một sự kiện tại VKU" />
+              <img src={recruitmentImage} alt="Poster tuyển thành viên VIC Gen 4" />
             </div>
             <motion.div
               className="recruitment-gen-sticker"

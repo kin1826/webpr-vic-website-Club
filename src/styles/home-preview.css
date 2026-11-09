@@ -131,8 +131,6 @@
   width: 3.2rem;
 }
 
-.home-preview-transition[data-motion="off"] .home-preview-ribbon-track,
-.home-preview-transition[data-motion="off"] .home-preview-transition-emblem,
 .home-preview-transition[data-preview-visible="false"] .home-preview-ribbon-track,
 .home-preview-transition[data-preview-visible="false"] .home-preview-transition-emblem {
   animation-play-state: paused;
