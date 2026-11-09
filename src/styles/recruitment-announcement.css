@@ -214,7 +214,7 @@
   min-height: 100%;
   overflow: hidden;
   isolation: isolate;
-  background: var(--vic-blue);
+  background: #111d69;
   color: white;
 }
 
@@ -255,7 +255,7 @@
   transform: rotate(-2.5deg);
 }
 
-.recruitment-photo-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center 72%; }
+.recruitment-photo-frame img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
 
 .recruitment-gen-sticker {
   position: absolute;
@@ -319,9 +319,8 @@
   .recruitment-title { font-size: clamp(3.25rem, 10vw, 5.6rem); }
   .recruitment-intro { max-width: 42rem; }
   .recruitment-cta-area { width: 100%; }
-  .recruitment-scene { min-height: clamp(14rem, 43vw, 21rem); }
-  .recruitment-photo-frame { inset: 8% 18% 10% 17%; }
-  .recruitment-photo-frame img { object-position: center 71%; }
+  .recruitment-scene { min-height: clamp(24rem, 70vw, 36rem); }
+  .recruitment-photo-frame { inset: 3% 24%; }
   .recruitment-gen-sticker { top: 5%; left: 8%; width: 5.1rem; }
   .recruitment-gen-sticker strong { font-size: 1.8rem; }
   .recruitment-side-note { right: 5%; bottom: 15%; font-size: .64rem; }
@@ -351,8 +350,8 @@
   .recruitment-form-cta { min-height: 3.95rem; border-radius: 1.05rem; padding: .55rem .6rem .55rem .9rem; font-size: .91rem; }
   .recruitment-cta-icon { width: 2.65rem; height: 2.65rem; border-radius: .8rem; }
   .recruitment-cta-caption { margin-top: .55rem; font-size: .77rem; }
-  .recruitment-scene { min-height: 11.5rem; }
-  .recruitment-photo-frame { inset: 7% 16% 8% 14%; border-width: .4rem; border-radius: .85rem; }
+  .recruitment-scene { min-height: clamp(22rem, 78vw, 30rem); }
+  .recruitment-photo-frame { inset: 3% 17%; border-width: .4rem; border-radius: .85rem; }
   .recruitment-gen-sticker { top: 3%; left: 5%; width: 4.15rem; }
   .recruitment-gen-sticker span,.recruitment-gen-sticker small { font-size: .37rem; }
   .recruitment-gen-sticker strong { font-size: 1.45rem; }

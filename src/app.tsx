@@ -1,9 +1,13 @@
 import { lazy, Suspense, useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { matchPath, Route, Routes, useLocation } from "react-router-dom";
 import { Footer } from "./components/layout/footer";
 import { Header } from "./components/layout/header";
+import { defaultPagePaths } from "./config/page-availability";
+import { DefaultPage } from "./pages/default-page";
 
 const HomePreviewPage = lazy(() => import("./pages/home-preview-page").then((module) => ({ default: module.HomePreviewPage })));
+const HomeColorPreviewPage = lazy(() => import("./pages/home-color-preview-page").then((module) => ({ default: module.HomeColorPreviewPage })));
+const RecruitmentColorPreviewPage = lazy(() => import("./pages/recruitment-color-preview-page").then((module) => ({ default: module.RecruitmentColorPreviewPage })));
 const HomePreview1Page = lazy(() => import("./pages/home-preview1-page").then((module) => ({ default: module.HomePreview1Page })));
 const AboutPage = lazy(() => import("./pages/about-page").then((module) => ({ default: module.AboutPage })));
 const DepartmentPage = lazy(() => import("./pages/department-page").then((module) => ({ default: module.DepartmentPage })));
@@ -45,11 +49,15 @@ export function App() {
   const { pathname } = useLocation();
   const routePath = pathname.replace(/\/+$/, "") || "/";
   const isHomePreview1 = routePath === "/home-preview1";
+  const isHomeColorPreview = routePath === "/home-preview";
   const isRecruitmentAnnouncement = routePath === "/tuyen-thanh-vien";
-  const isMinimalChrome = isHomePreview1 || isRecruitmentAnnouncement;
-  return <><ScrollManager /><a href="#main" className={"fixed left-3 top-3 z-[200] -translate-y-24 rounded-full px-4 py-2 text-sm focus:translate-y-0 " + (isHomePreview1 ? "hyper-skip-link" : "bg-vic-ink text-white")}>Đi đến nội dung chính</a>{!isMinimalChrome && <Header />}<Suspense fallback={<PageFallback />}><Routes>
+  const isRecruitmentColorPreview = routePath === "/tuyen-thanh-vien-preview";
+  const isDefaultPage = routePath === "/default" || defaultPagePaths.some((path) => matchPath({ path, end: true }, routePath));
+  const isMinimalChrome = isHomePreview1 || isRecruitmentAnnouncement || isHomeColorPreview || isRecruitmentColorPreview;
+  if (isDefaultPage) return <><ScrollManager /><Header /><DefaultPage /></>;
+  return <><ScrollManager /><a href="#main" className="fixed left-3 top-3 z-[200] -translate-y-24 rounded-full bg-vic-ink px-4 py-2 text-sm text-white focus:translate-y-0">Đi đến nội dung chính</a>{!isMinimalChrome && <Header />}<Suspense fallback={<PageFallback />}><Routes>
     <Route path="/" element={<HomePreviewPage />} />
-    <Route path="/home-preview" element={<HomePreviewPage />} />
+    <Route path="/home-preview" element={<HomeColorPreviewPage />} />
     <Route path="/home-preview1" element={<HomePreview1Page />} />
     <Route path="/gioi-thieu" element={<AboutPage />} />
     <Route path="/hoctap" element={<DepartmentPage departmentId="learning" />} />
@@ -62,9 +70,11 @@ export function App() {
     <Route path="/hoc-thuat/:slug" element={<ArticleDetailPage />} />
     <Route path="/thanh-vien/:slug" element={<MemberDetailPage />} />
     <Route path="/tuyen-thanh-vien" element={<RecruitmentAnnouncementPage />} />
+    <Route path="/tuyen-thanh-vien-preview" element={<RecruitmentColorPreviewPage />} />
     <Route path="/tham-gia" element={<JoinPage />} />
     <Route path="/admin/tuyen-thanh-vien" element={<RecruitmentAdminPage />} />
     <Route path="/design-system" element={<DesignSystemPage />} />
+    <Route path="/default" element={<DefaultPage />} />
     <Route path="*" element={<NotFoundPage />} />
   </Routes></Suspense>{!isMinimalChrome && <Footer />}</>;
 }

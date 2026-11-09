@@ -9,10 +9,12 @@ import { Dialog, DialogContent } from "../ui/dialog";
 type LeadershipGalleryProps = {
   departmentId?: DepartmentId;
   id?: string;
+  colorPreview?: boolean;
 };
 
-function LeaderCard({ member, index, onOpen }: { member: Member; index: number; onOpen: () => void }) {
+function LeaderCard({ member, index, onOpen, colorPreview = false }: { member: Member; index: number; onOpen: () => void; colorPreview?: boolean }) {
   const reduceMotion = useReducedMotion();
+  const replayWhenVisible = colorPreview && member.departmentId === null;
   const accent = member.accentColor ?? "#2457f5";
   const textAccent = member.accentTextColor ?? accent;
 
@@ -22,8 +24,9 @@ function LeaderCard({ member, index, onOpen }: { member: Member; index: number; 
       onClick={onOpen}
       initial={reduceMotion ? false : { opacity: 0, y: 18 }}
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.12 }}
+      viewport={{ once: !replayWhenVisible, amount: 0.12 }}
       whileHover={reduceMotion ? undefined : { y: -4, scale: 1.012 }}
+      whileFocus={colorPreview && !reduceMotion ? { y: -4, scale: 1.012 } : undefined}
       whileTap={reduceMotion ? undefined : { scale: 0.99 }}
       transition={{ duration: 0.52, delay: index * 0.065, ease: [0.22, 1, 0.36, 1] }}
       style={{ borderColor: `${accent}35` }}
@@ -79,7 +82,7 @@ function MemberPanel({ member }: { member: Member }) {
   );
 }
 
-export function LeadershipGallery({ departmentId, id = "doi-ngu" }: LeadershipGalleryProps) {
+export function LeadershipGallery({ departmentId, id = "doi-ngu", colorPreview = false }: LeadershipGalleryProps) {
   const [selected, setSelected] = useState<Member | null>(null);
   const reduceMotion = useReducedMotion();
   const leaders = members.filter((member) => member.poster && member.departmentId === null);
@@ -92,7 +95,7 @@ export function LeadershipGallery({ departmentId, id = "doi-ngu" }: LeadershipGa
           <div><p className="section-label">BAN CHỦ NHIỆM</p><h3 id="leadership-board-title" className="mt-2 text-2xl font-bold tracking-[-.045em] sm:text-3xl">Người giữ nhịp chung</h3></div>
           <span className="hidden font-mono text-xs text-vic-muted sm:block">01—02 / VIC</span>
         </div>
-        <div className="mx-auto grid max-w-4xl gap-5 sm:grid-cols-2 sm:gap-6">{leaders.map((member, index) => <LeaderCard key={member.id} member={member} index={index} onOpen={() => setSelected(member)} />)}</div>
+        <div className="mx-auto grid max-w-4xl gap-5 sm:grid-cols-2 sm:gap-6">{leaders.map((member, index) => <LeaderCard key={member.id} member={member} index={index} onOpen={() => setSelected(member)} colorPreview={colorPreview} />)}</div>
       </section>}
 
       <div className={!departmentId ? "mt-14 grid gap-12 xl:grid-cols-2" : ""}>
@@ -103,13 +106,13 @@ export function LeadershipGallery({ departmentId, id = "doi-ngu" }: LeadershipGa
               <div><p className="section-label">{departmentId ? "ĐỘI NGŨ BAN" : "CÙNG VẬN HÀNH"}</p><h3 id={`leaders-${department.id}-title`} className="mt-2 text-2xl font-bold tracking-[-.045em] sm:text-3xl">{department.name}</h3></div>
               <GraduationCap size={21} className="shrink-0 text-vic-blue" aria-hidden="true" />
             </div>
-            <div className="grid gap-5 sm:grid-cols-2 sm:gap-4">{departmentMembers.map((member, index) => <LeaderCard key={member.id} member={member} index={index + leaders.length} onOpen={() => setSelected(member)} />)}</div>
+            <div className="grid gap-5 sm:grid-cols-2 sm:gap-4">{departmentMembers.map((member, index) => <LeaderCard key={member.id} member={member} index={index + leaders.length} onOpen={() => setSelected(member)} colorPreview={colorPreview} />)}</div>
           </section>;
         })}
       </div>
 
       <Dialog open={Boolean(selected)} onOpenChange={(open) => { if (!open) setSelected(null); }}>
-        {selected && <DialogContent position="right" title={selected.name} description={selected.role} className="p-0">
+        {selected && <DialogContent position="right" title={selected.name} description={selected.role} colorTheme={colorPreview ? "home-demo01" : undefined} className="p-0">
           <motion.div initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.32, delay: 0.08 }}><MemberPanel member={selected} /></motion.div>
         </DialogContent>}
       </Dialog>

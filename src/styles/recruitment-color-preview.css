@@ -1,0 +1,35 @@
+/* Color-only overrides for the existing recruitment announcement. */
+.recruitment-page[data-vic-theme="home-demo01"] {
+  background-color: var(--demo-bg);
+  background-image: linear-gradient(rgba(215, 225, 245, .09) 1px, transparent 1px), linear-gradient(90deg, rgba(215, 225, 245, .09) 1px, transparent 1px);
+}
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-page-glow { background: radial-gradient(circle, rgba(21, 88, 201, .3), rgba(21, 88, 201, 0) 68%); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-topbar { color: var(--demo-text); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-brand small { color: var(--demo-muted); }
+.recruitment-page[data-vic-theme="home-demo01"] img.logo-blend { filter: brightness(0) invert(1); mix-blend-mode: screen; }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-home-link { border-color: var(--demo-line); background: rgba(12, 17, 27, .82); color: var(--demo-text); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-home-link:hover { background: var(--demo-lime); color: var(--demo-bg); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-poster { border-color: var(--demo-line); background: rgba(12, 17, 27, .9); box-shadow: 0 30px 90px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(243, 246, 251, .08); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-kicker,
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-title-blue,
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-click-note { color: var(--demo-lime); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-live-dot { background: var(--demo-lime); box-shadow: 0 0 0 5px rgba(212, 255, 36, .13); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-title-blue::after { background: rgba(212, 255, 36, .13); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-kicker-generation,
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-audience-icon { background: #122242; color: var(--demo-lime); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-audience-icon svg,
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-deadline svg,
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-cta-caption svg { color: var(--demo-lime); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-departments span { border-color: var(--demo-line); background: var(--demo-surface-raised); color: var(--demo-text); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-deadline,
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-cta-caption { color: var(--demo-muted); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-deadline strong { color: var(--demo-text); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-form-cta { border-color: rgba(243, 246, 251, .3); background: var(--demo-lime); box-shadow: 0 16px 38px rgba(212, 255, 36, .18), inset 0 1px 0 rgba(255, 255, 255, .4); color: var(--demo-bg); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-form-cta:hover { background: #c6f11f; box-shadow: 0 22px 44px rgba(212, 255, 36, .22); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-cta-icon { background: var(--demo-blue); color: var(--demo-text); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-scene { background: var(--demo-blue-deep); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-gen-sticker { border-color: rgba(243, 246, 251, .28); background: var(--demo-lime); color: var(--demo-bg); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-gen-sticker strong { color: var(--demo-bg); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-side-note { border-color: var(--demo-line); background: rgba(12, 17, 27, .92); color: var(--demo-text); box-shadow: 0 14px 32px rgba(0, 0, 0, .38); }
+.recruitment-page[data-vic-theme="home-demo01"] .recruitment-side-note span { color: var(--demo-lime); }
+.recruitment-page[data-vic-theme="home-demo01"] :focus-visible { outline-color: rgba(212, 255, 36, .8); }

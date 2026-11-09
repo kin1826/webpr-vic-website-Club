@@ -90,6 +90,15 @@ Tiêu đề ngắn, chia dòng để có nhịp. Các giá trị line-height ch�
 
 Các tiểu mục dưới đây ghi lại cách `/home-preview` đang kể câu chuyện trang chủ. Đây là tham khảo bố cục của route đó, không phải template bắt buộc cho toàn bộ website.
 
+### Về VIC — hồ sơ cộng đồng
+
+- Trang `/gioi-thieu` dùng cùng bảng màu, font và chất liệu chung nhưng có bố cục kể chuyện riêng.
+- Mở đầu bằng typography lớn và ảnh tập thể thật trên khung giấy; nội dung tiếp tục qua câu chuyện, định hướng, hai ban và đội ngũ.
+- Lớp giấy có thể lệch nhẹ, nhưng chữ luôn nằm thẳng trên mặt phẳng dễ đọc. Liquid Glass dùng cho ghi chú nhỏ; không phủ lên toàn ảnh hoặc đoạn văn.
+- Phần định hướng trong `src/data/home-preview-content.ts` vẫn là đề xuất, cần CLB xác nhận trước khi coi là thông điệp chính thức.
+- Dùng lại `OrganizationChart` / `LeadershipGallery`; không nhân bản hồ sơ hoặc sửa gallery dùng chung chỉ để đổi giao diện trang About.
+- CTA cuối dẫn tới `/tuyen-thanh-vien`; không trỏ về form cũ `/tham-gia`.
+
 ### Header — thanh điều hướng kính nổi
 
 - Thanh fixed, căn giữa, cách đỉnh khoảng `16px`; desktop khoảng `1.1rem`.

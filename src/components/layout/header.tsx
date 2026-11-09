@@ -1,22 +1,51 @@
 import { AnimatePresence, motion } from "motion/react";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, Moon, Sun, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { cn } from "../../lib/utils";
 import { Button } from "../ui/button";
 import { VicLogo } from "../shared/vic-logo";
+import { MagneticCta } from "../home-color-preview/lucian/magnetic-cta";
 
 const primaryLinks = [{ label: "Về VIC", to: "/gioi-thieu" }, { label: "Hoạt động", to: "/hoat-dong" }, { label: "Học thuật", to: "/hoc-thuat" }];
 const departmentLinks = [{ label: "Ban Học tập", to: "/hoctap" }, { label: "Ban Truyền thông", to: "/truyenthong" }];
 const navClass = ({ isActive }: { isActive: boolean }) => cn("rounded-full px-3 py-2 text-sm font-medium transition-colors hover:bg-vic-blue-soft hover:text-vic-blue", isActive && "bg-vic-blue-soft text-vic-blue");
 
-export function Header() {
+export function Header({
+  homePath = "/",
+  recruitmentPath = "/tuyen-thanh-vien",
+  lucianCta = false,
+  theme,
+  onThemeToggle,
+}: {
+  homePath?: string;
+  recruitmentPath?: string;
+  lucianCta?: boolean;
+  theme?: "light" | "dark";
+  onThemeToggle?: (button: HTMLButtonElement) => void;
+}) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [departmentOpen, setDepartmentOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const departmentRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const departmentActive = departmentLinks.some((item) => location.pathname === item.to);
+  const hasThemeToggle = theme !== undefined && onThemeToggle !== undefined;
+  const ThemeIcon = theme === "dark" ? Sun : Moon;
+  const themeToggleLabel = theme === "dark" ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối";
+
+  const renderThemeToggle = (className?: string) => hasThemeToggle ? (
+    <button
+      type="button"
+      className={cn("home-preview-theme-toggle", className)}
+      aria-label={themeToggleLabel}
+      aria-pressed={theme === "dark"}
+      title={themeToggleLabel}
+      onClick={(event) => onThemeToggle(event.currentTarget)}
+    >
+      <ThemeIcon size={19} strokeWidth={1.8} aria-hidden="true" />
+    </button>
+  ) : null;
 
   useEffect(() => { const onScroll = () => setScrolled(scrollY > 20); onScroll(); addEventListener("scroll", onScroll, { passive: true }); return () => removeEventListener("scroll", onScroll); }, []);
   useEffect(() => { setMobileOpen(false); setDepartmentOpen(false); }, [location.pathname]);
@@ -30,7 +59,7 @@ export function Header() {
 
   return <>
     <header className={cn("glass-surface fixed left-1/2 top-4 z-50 flex h-[4.65rem] w-[min(calc(100%-2.5rem),72.5rem)] -translate-x-1/2 items-center rounded-full px-3 pl-5 transition-[background-color,box-shadow] duration-300 ease-out md:top-[1.1rem]", scrolled && "bg-white/88 shadow-[0_14px_44px_rgba(22,22,22,.13)]")}>
-      <Link to="/" className="flex shrink-0 items-center gap-3" aria-label="VIC — Trang chủ"><VicLogo className="w-[4.9rem]" /><span className="hidden leading-tight sm:grid"><strong className="text-xs tracking-wide">VKU IT CLUB</strong><span className="font-mono text-[.6rem] text-vic-muted">WE MAKE IT.</span></span></Link>
+      <Link to={homePath} className="flex shrink-0 items-center gap-3" aria-label="VIC — Trang chủ"><VicLogo className="w-[4.9rem]" /><span className="hidden leading-tight sm:grid"><strong className="text-xs tracking-wide">VKU IT CLUB</strong><span className="font-mono text-[.6rem] text-vic-muted">WE MAKE IT.</span></span></Link>
       <nav className="mx-auto hidden items-center gap-1 lg:flex" aria-label="Điều hướng chính">
         <NavLink to="/gioi-thieu" className={navClass}>Về VIC</NavLink>
         <div className="relative" ref={departmentRef}><button type="button" onClick={() => setDepartmentOpen((value) => !value)} aria-expanded={departmentOpen} aria-controls="department-menu" className={cn("flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium transition-colors hover:bg-vic-blue-soft hover:text-vic-blue", departmentActive && "bg-vic-blue-soft text-vic-blue")}>Các ban <ChevronDown size={14} className={cn("transition-transform", departmentOpen && "rotate-180")} /></button>
@@ -38,14 +67,18 @@ export function Header() {
         </div>
         {primaryLinks.slice(1).map((item) => <NavLink key={item.to} to={item.to} className={navClass}>{item.label}</NavLink>)}
       </nav>
-      <Button asChild size="sm" className="ml-auto hidden lg:inline-flex"><Link to="/tuyen-thanh-vien">Tham gia VIC</Link></Button>
-      <Button size="icon" className="ml-auto lg:hidden" onClick={() => setMobileOpen((value) => !value)} aria-label={mobileOpen ? "Đóng menu" : "Mở menu"} aria-expanded={mobileOpen} aria-controls="mobile-menu">{mobileOpen ? <X size={20} /> : <Menu size={20} />}</Button>
+      <div className="ml-auto hidden items-center gap-2 lg:flex">
+        {renderThemeToggle()}
+        {lucianCta ? <MagneticCta to={recruitmentPath} label="Tham gia VIC" compact /> : <Button asChild size="sm"><Link to={recruitmentPath}>Tham gia VIC</Link></Button>}
+      </div>
+      {renderThemeToggle("ml-auto lg:hidden")}
+      <Button size="icon" className={cn(hasThemeToggle ? "ml-2" : "ml-auto", "lg:hidden")} onClick={() => setMobileOpen((value) => !value)} aria-label={mobileOpen ? "Đóng menu" : "Mở menu"} aria-expanded={mobileOpen} aria-controls="mobile-menu">{mobileOpen ? <X size={20} /> : <Menu size={20} />}</Button>
     </header>
     <AnimatePresence>{mobileOpen && <motion.nav id="mobile-menu" className="glass-surface fixed bottom-4 left-4 right-4 top-[6.2rem] z-40 overflow-y-auto rounded-[1.75rem] bg-white/94 p-4 lg:hidden" aria-label="Điều hướng di động" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
       <NavLink to="/gioi-thieu" className="flex min-h-13 items-center justify-between border-b border-black/10 px-3 font-semibold">Về VIC <span>↘</span></NavLink>
       <p className="px-3 pb-2 pt-5 font-mono text-[.66rem] font-semibold text-vic-muted">CÁC BAN</p>{departmentLinks.map((item) => <NavLink key={item.to} to={item.to} className="flex min-h-12 items-center justify-between rounded-2xl px-4 text-sm font-semibold hover:bg-vic-blue-soft">{item.label}<span>↗</span></NavLink>)}
       <p className="px-3 pb-2 pt-5 font-mono text-[.66rem] font-semibold text-vic-muted">KHÁM PHÁ</p>{[{ label: "Hoạt động", to: "/hoat-dong" }, { label: "Sản phẩm", to: "/san-pham" }, { label: "Học thuật", to: "/hoc-thuat" }].map((item) => <NavLink key={item.to} to={item.to} className="flex min-h-12 items-center justify-between rounded-2xl px-4 text-sm font-semibold hover:bg-vic-blue-soft">{item.label}<span>↗</span></NavLink>)}
-        <Button asChild className="mt-5 w-full"><Link to="/tuyen-thanh-vien">Tham gia VIC</Link></Button>
+        {lucianCta ? <div className="home-preview-header-mobile-cta mt-5"><MagneticCta to={recruitmentPath} label="Tham gia VIC" compact /></div> : <Button asChild className="mt-5 w-full"><Link to={recruitmentPath}>Tham gia VIC</Link></Button>}
     </motion.nav>}</AnimatePresence>
   </>;
 }

@@ -1,7 +1,5 @@
 import { ArrowRight, Code2, Megaphone, TrendingUp, UsersRound } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { useReducedMotion } from "motion/react";
 import { ActivityCard, ArticleCard, ProjectCard } from "../components/content/content-cards";
 import { HeroSection } from "../components/sections/hero-section";
 import { SpiritStrip } from "../components/sections/spirit-strip";
@@ -13,9 +11,7 @@ import { Button } from "../components/ui/button";
 import { activities, articles, departments, faqs, projects } from "../data/site-data";
 
 export function HomePage() {
-  const reduce = useReducedMotion();
-  const [motionEnabled, setMotionEnabled] = useState(!reduce);
-  return <main id="main"><HeroSection motionEnabled={motionEnabled} onToggleMotion={() => setMotionEnabled((value) => !value)} /><SpiritStrip />
+  return <main id="main"><HeroSection /><SpiritStrip />
     <section id="about" className="section-space scroll-mt-28"><div className="page-container grid gap-12 lg:grid-cols-[1.05fr_.95fr]"><div><SectionHeading label="01 / VỀ VIC" title={<>Công nghệ là điểm chung.<br />Đồng hành là điều gắn kết.</>} description="VIC là CLB Công nghệ thông tin tại VKU, tạo ra môi trường để sinh viên cùng học hỏi, thực hành và kết nối qua các ban, hoạt động và sản phẩm. Thành viên được khuyến khích bắt đầu từ câu hỏi của mình, chủ động thử nghiệm, chia sẻ điều đã học và đóng góp theo thế mạnh. Từng bước nhỏ khi được làm cùng nhau có thể trở thành một trải nghiệm đáng nhớ và một sản phẩm có ích." /><Button asChild variant="secondary" className="mt-7"><Link to="/gioi-thieu">Tìm hiểu về VIC <ArrowRight size={17} /></Link></Button></div><div className="border-t border-black/10">{[{ icon: UsersRound, title: "Cùng học", text: "Trao đổi kiến thức và cùng tháo gỡ vấn đề." }, { icon: Code2, title: "Cùng làm", text: "Thử nghiệm ý tưởng qua hoạt động và sản phẩm." }, { icon: TrendingUp, title: "Cùng phát triển", text: "Rèn kỹ năng, kết nối và chia sẻ cơ hội." }].map(({ icon: Icon, title, text }) => <div key={title} className="grid grid-cols-[3rem_1fr] gap-4 border-b border-black/10 py-7"><span className="grid size-12 place-items-center rounded-2xl bg-vic-blue-soft text-vic-blue"><Icon size={20} /></span><div><h3 className="font-semibold">{title}</h3><p className="mt-1 text-sm leading-7 text-vic-muted">{text}</p></div></div>)}</div></div></section>
 
     <section className="section-space bg-vic-surface"><div className="page-container"><div className="mb-11"><SectionHeading label="02 / HAI KHÔNG GIAN CỦA VIC" title="Mỗi thế mạnh, một cách đóng góp." /></div><div className="grid gap-6 md:grid-cols-2">{departments.map((department) => { const Icon = department.id === "learning" ? Code2 : Megaphone; return <Link key={department.id} to={`/${department.slug}`} className="glass-surface interactive-card group rounded-[2rem] p-7 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-vic-blue/25 md:p-9"><div className="flex items-start justify-between"><span className="grid size-14 place-items-center rounded-[1.2rem] bg-vic-ink text-white"><Icon size={22} /></span><span className="font-mono text-xs text-vic-muted">{department.id === "learning" ? "TEAM / 01" : "TEAM / 02"}</span></div><h3 className="mt-14 text-3xl font-semibold tracking-[-.04em]">{department.name}</h3><p className="mt-4 max-w-xl leading-7 text-vic-muted">{department.summary}</p><div className="mt-6 flex flex-wrap gap-2">{department.tags.map((tag) => <Badge key={tag}>{tag}</Badge>)}</div><span className="mt-8 inline-flex items-center gap-2 font-semibold">Khám phá ban <span className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span></span></Link>; })}</div></div></section>

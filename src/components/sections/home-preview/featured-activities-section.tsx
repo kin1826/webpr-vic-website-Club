@@ -1,5 +1,6 @@
 import { Camera, Code2, Compass, Presentation, type LucideIcon } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
+import { useState } from "react";
 import { homeActivityGroups } from "../../../data/home-activity-groups";
 import type { HomeActivityGroup } from "../../../types/home-preview";
 import { PreviewReveal } from "./preview-reveal";
@@ -19,8 +20,9 @@ const imageTints: Record<HomeActivityGroup["id"], string> = {
   extracurricular: "from-[#132e34]/60 via-[#2c786f]/15 to-transparent",
 };
 
-function ActivityGroupCard({ group, index }: { group: HomeActivityGroup; index: number }) {
+function ActivityGroupCard({ group, index, coordinatedHover }: { group: HomeActivityGroup; index: number; coordinatedHover: boolean }) {
   const reduce = useReducedMotion();
+  const [isHovered, setIsHovered] = useState(false);
   const Icon = activityIcons[group.icon];
 
   return (
@@ -31,6 +33,8 @@ function ActivityGroupCard({ group, index }: { group: HomeActivityGroup; index: 
       viewport={{ once: true, amount: 0.16 }}
       transition={{ duration: 0.7, delay: index * 0.09, ease: [0.22, 1, 0.36, 1] }}
       whileHover={reduce ? undefined : { y: -5 }}
+      onHoverStart={coordinatedHover ? () => setIsHovered(true) : undefined}
+      onHoverEnd={coordinatedHover ? () => setIsHovered(false) : undefined}
     >
       <div className="home-preview-activity-cover relative aspect-[16/9] overflow-hidden bg-vic-ink">
         <motion.img
@@ -40,7 +44,8 @@ function ActivityGroupCard({ group, index }: { group: HomeActivityGroup; index: 
           decoding="async"
           className="home-preview-activity-image size-full object-cover"
           style={{ objectPosition: group.imagePosition }}
-          whileHover={reduce ? undefined : { scale: 1.045 }}
+          animate={coordinatedHover ? reduce ? undefined : { scale: isHovered ? 1.045 : 1 } : undefined}
+          whileHover={!coordinatedHover && !reduce ? { scale: 1.045 } : undefined}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         />
         <span className={`absolute inset-0 bg-gradient-to-br ${imageTints[group.id]}`} aria-hidden="true" />
@@ -50,7 +55,8 @@ function ActivityGroupCard({ group, index }: { group: HomeActivityGroup; index: 
           </span>
           <motion.span
             className="grid size-11 shrink-0 place-items-center rounded-full border border-white/45 bg-white/85 text-vic-ink shadow-lg backdrop-blur"
-            whileHover={reduce ? undefined : { rotate: 8, scale: 1.06 }}
+            animate={coordinatedHover ? reduce ? undefined : { rotate: isHovered ? 8 : 0, scale: isHovered ? 1.06 : 1 } : undefined}
+            whileHover={!coordinatedHover && !reduce ? { rotate: 8, scale: 1.06 } : undefined}
             transition={{ duration: 0.3 }}
             aria-hidden="true"
           >
@@ -76,7 +82,7 @@ function ActivityGroupCard({ group, index }: { group: HomeActivityGroup; index: 
   );
 }
 
-export function FeaturedActivitiesSection() {
+export function FeaturedActivitiesSection({ coordinatedHover = false }: { coordinatedHover?: boolean }) {
   const { ref, isVisible } = usePreviewVisibility<HTMLElement>();
 
   return (
@@ -109,7 +115,7 @@ export function FeaturedActivitiesSection() {
 
         <div className="grid items-stretch gap-5 sm:grid-cols-2 lg:gap-6">
           {homeActivityGroups.map((group, index) => (
-            <ActivityGroupCard key={group.id} group={group} index={index} />
+            <ActivityGroupCard key={group.id} group={group} index={index} coordinatedHover={coordinatedHover} />
           ))}
         </div>
       </div>

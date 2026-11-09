@@ -4,7 +4,7 @@ import { LeadershipGallery } from "../../organization/leadership-gallery";
 import { PreviewReveal } from "./preview-reveal";
 import { usePreviewVisibility } from "./use-preview-visibility";
 
-export function OrganizationPreviewSection() {
+export function OrganizationPreviewSection({ colorPreview = false }: { colorPreview?: boolean }) {
   const { ref, isVisible } = usePreviewVisibility<HTMLElement>();
 
   return (
@@ -21,7 +21,7 @@ export function OrganizationPreviewSection() {
         <div className="relative isolate">
           <div className="pointer-events-none absolute -right-20 top-12 -z-10 size-72 rounded-full border border-vic-blue/10" aria-hidden="true" />
           <div className="pointer-events-none absolute -right-8 top-20 -z-10 size-48 rounded-full border border-vic-blue/10" aria-hidden="true" />
-          <LeadershipGallery />
+          <LeadershipGallery colorPreview={colorPreview} />
         </div>
       </div>
     </section>

@@ -63,9 +63,6 @@
 .hyper-desktop-nav { display: flex; align-items: center; gap: .16rem; }
 .hyper-desktop-nav > a { display: inline-flex; min-height: 42px; align-items: center; padding-inline: .7rem; color: rgba(243,247,255,.82) !important; font-size: .77rem; font-weight: 550; transition: color .2s ease; }
 .hyper-desktop-nav > a:hover { color: var(--hyper-cyan) !important; }
-.hyper-motion-control { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; gap: .48rem; padding: .45rem .7rem; border: 1px solid transparent; background: transparent; color: var(--hyper-white); cursor: pointer; font-size: .68rem; font-weight: 550; }
-.hyper-motion-control:hover { border-color: rgba(114,231,239,.34); color: var(--hyper-cyan); }
-.hyper-motion-control:disabled { cursor: default; opacity: .7; }
 .hyper-nav-cta, .hyper-mobile-cta { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; gap: .55rem; padding: .55rem .9rem; border: 1px solid rgba(114,231,239,.5); background: rgba(20,63,120,.34); color: var(--hyper-white) !important; font-size: .75rem; font-weight: 650; transition: background-color .2s ease, border-color .2s ease; }
 .hyper-nav-cta:hover, .hyper-mobile-cta:hover { border-color: var(--hyper-cyan); background: rgba(20,63,120,.75); }
 .hyper-menu-trigger { display: none; width: 44px; height: 44px; place-items: center; border: 1px solid var(--hyper-border); background: transparent; cursor: pointer; }
@@ -321,8 +318,6 @@
 @media (max-width: 70rem) {
   .hyper-desktop-nav { gap: 0; }
   .hyper-desktop-nav > a { padding-inline: .5rem; font-size: .72rem; }
-  .hyper-motion-control { padding-inline: .48rem; font-size: 0; }
-  .hyper-motion-control svg { width: 18px; height: 18px; }
   .hyper-hero h1 { font-size: clamp(4rem, 8.2vw, 7.2rem); }
 }
 @media (max-width: 54rem) {
@@ -332,7 +327,6 @@
   .hyper-menu-trigger { display: grid; }
   .hyper-mobile-nav:not([hidden]) { position: absolute; inset: 4.65rem 0 auto; display: grid; gap: .25rem; padding: .35rem 1.25rem 1.1rem; border-bottom: 1px solid var(--hyper-border); background: rgba(4,7,13,.97); }
   .hyper-mobile-nav > a:not(.hyper-mobile-cta) { display: flex; min-height: 46px; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(172,207,239,.13); font-size: .85rem; }
-  .hyper-mobile-nav .hyper-motion-control { justify-content: flex-start; font-size: .75rem; }
   .hyper-mobile-cta { justify-content: space-between; margin-top: .4rem; }
   .hyper-hero { min-height: 54rem; padding: 7rem 0 6rem; }
   .hyper-hero-scene { top: 3%; right: -16%; bottom: 21%; width: 91%; opacity: .92; }

@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { faqs } from "../../../data/site-data";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../../ui/accordion";
 import { Button } from "../../ui/button";
+import { LucianFaqAccordion } from "../../home-color-preview/lucian/lucian-faq-accordion";
+import { MagneticCta } from "../../home-color-preview/lucian/magnetic-cta";
 import { PreviewReveal } from "./preview-reveal";
 import { usePreviewVisibility } from "./use-preview-visibility";
 
-export function HomePreviewJoinSection() {
+export function HomePreviewJoinSection({ recruitmentPath = "/tuyen-thanh-vien", lucianInteractions = false }: { recruitmentPath?: string; lucianInteractions?: boolean }) {
   const reduce = useReducedMotion();
   const { ref: joinRef, isVisible: joinVisible } = usePreviewVisibility<HTMLDivElement>();
   return (
@@ -23,9 +25,11 @@ export function HomePreviewJoinSection() {
               <p className="text-sm font-semibold text-white/75">Một trang giấy vẫn còn chỗ trống</p>
               <h2 id="preview-join-title" className="mt-5 max-w-4xl text-[clamp(2.8rem,7vw,6.2rem)] font-bold leading-[.92] tracking-[-.075em]">Ý tưởng tiếp theo<br />có thể bắt đầu từ bạn.</h2>
               <p className="mt-6 max-w-2xl text-base leading-7 text-white/80">Khám phá các ban và hoạt động, rồi chọn bước tiếp theo phù hợp với mình.</p>
-              <motion.div className="mt-8 inline-block" whileHover={reduce ? undefined : { x: 8, scale: 1.035 }} whileTap={reduce ? undefined : { scale: 0.97 }} transition={{ type: "spring", stiffness: 240, damping: 18 }}>
-                <Button asChild variant="light"><Link to="/tuyen-thanh-vien">Đăng ký tham gia VIC <ArrowRight size={17} /></Link></Button>
-              </motion.div>
+              {lucianInteractions ? <div className="mt-8"><MagneticCta to={recruitmentPath} /></div> : (
+                <motion.div className="mt-8 inline-block" whileHover={reduce ? undefined : { x: 8, scale: 1.035 }} whileTap={reduce ? undefined : { scale: 0.97 }} transition={{ type: "spring", stiffness: 240, damping: 18 }}>
+                  <Button asChild variant="light"><Link to={recruitmentPath}>Đăng ký tham gia VIC <ArrowRight size={17} /></Link></Button>
+                </motion.div>
+              )}
             </PreviewReveal>
           </div>
           <motion.span className="absolute bottom-7 right-7 hidden text-white/80 md:block" initial={reduce ? false : { opacity: 0, rotate: -35, scale: 0.3 }} whileInView={reduce ? undefined : { opacity: 1, rotate: 0, scale: 1 }} viewport={{ once: true }} transition={{ type: "spring", stiffness: 170, damping: 14, delay: 0.55 }}><MoveUpRight size={44} strokeWidth={1} aria-hidden="true" /></motion.span>
@@ -37,9 +41,11 @@ export function HomePreviewJoinSection() {
             <h2 className="text-[clamp(1.8rem,3.6vw,2.6rem)] font-bold leading-tight tracking-[-.04em]">Trước khi bạn bắt đầu.</h2>
           </PreviewReveal>
           <PreviewReveal delay={0.12}>
-            <Accordion type="single" collapsible className="border-t border-black/10">
-            {faqs.slice(0, 3).map((item) => <AccordionItem key={item.id} value={item.id}><AccordionTrigger>{item.question}</AccordionTrigger><AccordionContent>{item.answer}</AccordionContent></AccordionItem>)}
-            </Accordion>
+            {lucianInteractions ? <LucianFaqAccordion items={faqs.slice(0, 3)} /> : (
+              <Accordion type="single" collapsible className="border-t border-black/10">
+                {faqs.slice(0, 3).map((item) => <AccordionItem key={item.id} value={item.id}><AccordionTrigger>{item.question}</AccordionTrigger><AccordionContent>{item.answer}</AccordionContent></AccordionItem>)}
+              </Accordion>
+            )}
           </PreviewReveal>
         </div>
       </div>

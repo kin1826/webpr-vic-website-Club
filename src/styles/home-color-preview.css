@@ -1,0 +1,83 @@
+/* Color-only overrides for the existing home composition. Layout and keyframes stay in home-preview.css. */
+.vic-color-preview .home-preview-motion { background-color: var(--demo-bg); color: var(--demo-text); }
+.vic-color-preview .home-preview-ribbon-lane-primary {
+  color: var(--demo-bg);
+  background: linear-gradient(105deg, #d4ff24 0%, #d4ff24 48%, #c6f11f 100%);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .45);
+}
+.vic-color-preview .home-preview-ribbon-lane-secondary {
+  color: var(--demo-text);
+  background: rgba(21, 88, 201, .92);
+  border-color: rgba(243, 246, 251, .34);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, .3), inset 0 0 0 1px rgba(243, 246, 251, .1);
+}
+.vic-color-preview .home-preview-ribbon-slash { color: var(--demo-lime); }
+.vic-color-preview .home-preview-transition-emblem { background: rgba(12, 17, 27, .94); border-color: rgba(243, 246, 251, .38); box-shadow: 0 18px 48px rgba(0, 0, 0, .48), inset 0 0 0 5px rgba(243, 246, 251, .06); }
+.vic-color-preview .home-preview-transition-emblem-halo { border-color: rgba(212, 255, 36, .45); box-shadow: 0 0 0 8px rgba(212, 255, 36, .08); }
+
+.vic-color-preview .home-preview-overview { background-color: var(--demo-surface); }
+.vic-color-preview .home-preview-overview-photo::after {
+  background-image: linear-gradient(90deg, rgba(3, 4, 7, .94) 0%, rgba(3, 4, 7, .86) 52%, rgba(3, 4, 7, .72) 100%), linear-gradient(180deg, rgba(3, 4, 7, .35), rgba(3, 4, 7, .68));
+}
+.vic-color-preview .home-preview-overview-light-a { background-image: radial-gradient(ellipse at 76% 16%, rgba(21, 88, 201, .18), transparent 31%); }
+.vic-color-preview .home-preview-overview-light-b { background-image: radial-gradient(ellipse at 8% 86%, rgba(212, 255, 36, .045), transparent 34%); }
+.vic-color-preview .home-preview-overview::after { border-color: rgba(21, 88, 201, .3); }
+.vic-color-preview .home-preview-paper { border-color: var(--demo-line); background-color: var(--demo-surface); box-shadow: 0 28px 80px rgba(0, 0, 0, .5); }
+.vic-color-preview .home-preview-note { border-color: rgba(243, 246, 251, .2); background-color: rgba(12, 17, 27, .92); color: var(--demo-text); box-shadow: 0 18px 50px rgba(0, 0, 0, .42); }
+.vic-color-preview .home-preview-workspace .bg-vic-blue { background-color: var(--demo-blue); }
+.vic-color-preview .home-preview-workspace > .bg-vic-blue { background-color: var(--demo-blue); }
+.vic-color-preview .home-preview-workspace .bg-vic-blue-soft { background-color: #102144; }
+.vic-color-preview .home-preview-workspace .home-preview-paper > div[aria-hidden="true"] span { background-color: rgba(243, 246, 251, .14); }
+
+.vic-color-preview .home-preview-activities { background-color: var(--demo-bg); }
+.vic-color-preview .home-preview-activity-grid-horizontal { background-image: linear-gradient(rgba(21, 88, 201, .1) 1px, transparent 1px); }
+.vic-color-preview .home-preview-activity-grid-vertical { background-image: linear-gradient(90deg, rgba(21, 88, 201, .1) 1px, transparent 1px); }
+.vic-color-preview .home-preview-activity-grid-window::after { background-image: radial-gradient(ellipse at 90% 12%, rgba(21, 88, 201, .16), transparent 28%); }
+.vic-color-preview .home-preview-activity-card { border-color: var(--demo-line); background-color: rgba(12, 17, 27, .94); box-shadow: 0 16px 48px rgba(0, 0, 0, .3); }
+.vic-color-preview .home-preview-activity-card:hover { border-color: rgba(212, 255, 36, .55); box-shadow: 0 26px 64px rgba(0, 0, 0, .48); }
+.vic-color-preview .home-preview-activity-card .text-vic-blue { color: var(--demo-lime); }
+.vic-color-preview .home-preview-activity-card .bg-vic-surface\/80 { background-color: rgba(20, 29, 43, .88); }
+.vic-color-preview .home-preview-activity-card .border-black\/[\.07] { border-color: rgba(243, 246, 251, .14); }
+
+.vic-color-preview .home-preview-department-atmosphere-a { background-image: radial-gradient(ellipse at 14% 18%, rgba(21, 88, 201, .32), transparent 37%); }
+.vic-color-preview .home-preview-department-atmosphere-b { background-image: radial-gradient(ellipse at 87% 78%, rgba(212, 255, 36, .05), transparent 36%); }
+.vic-color-preview .home-preview-departments::before { border-color: rgba(243, 246, 251, .12); box-shadow: 0 0 0 32px rgba(243, 246, 251, .025), 0 0 0 74px rgba(243, 246, 251, .015); }
+.vic-color-preview .home-preview-departments a.border-vic-blue\/45 { border-color: rgba(21, 88, 201, .64); background-color: rgba(21, 88, 201, .14); }
+.vic-color-preview .home-preview-departments a.border-white\/20 { border-color: rgba(243, 246, 251, .22); background-color: rgba(243, 246, 251, .055); }
+.vic-color-preview .home-preview-departments a::after { background: linear-gradient(90deg, transparent, rgba(212, 255, 36, .22), transparent); }
+.vic-color-preview .home-preview-departments .bg-white { background-color: var(--demo-text); color: var(--demo-bg); }
+.vic-color-preview .home-preview-departments .bg-vic-blue { background-color: var(--demo-blue); color: var(--demo-text); }
+
+.vic-color-preview .home-preview-organization {
+  background-color: var(--demo-bg);
+  background-image: radial-gradient(ellipse at 50% 53%, rgba(21, 88, 201, .16), transparent 47%), linear-gradient(180deg, rgba(243, 246, 251, .025), transparent 35%);
+}
+.vic-color-preview .home-preview-org-current { stroke: var(--demo-lime); }
+.vic-color-preview .home-preview-departments > svg > path:first-child { stroke: var(--demo-lime); }
+.vic-color-preview .home-preview-org-map > div > div,
+.vic-color-preview .home-preview-org-map > div > section { border-color: var(--demo-line); background-color: rgba(12, 17, 27, .96); color: var(--demo-text); }
+.vic-color-preview .home-preview-org-map li a:hover,
+.vic-color-preview .home-preview-org-map li a:focus-visible { box-shadow: 0 12px 28px rgba(212, 255, 36, .12); }
+.vic-color-preview .home-preview-final-note { background-color: var(--demo-blue); background-image: radial-gradient(ellipse at 78% 50%, rgba(243, 246, 251, .14), transparent 39%); box-shadow: 0 35px 90px rgba(21, 88, 201, .3); }
+.vic-color-preview .home-preview-final-note::before { background: conic-gradient(from 0deg at 75% 50%, transparent 0 52%, rgba(212, 255, 36, .16) 59%, transparent 68% 100%); }
+.vic-color-preview .home-preview-final-note .text-white\/75,
+.vic-color-preview .home-preview-final-note .text-white\/80 { color: rgba(243, 246, 251, .82); }
+.vic-color-preview footer { background-color: var(--demo-bg); }
+.vic-color-preview footer a:hover { color: var(--demo-lime); }
+
+/* Home preview actions use dark surfaces; lime stays an accent color. */
+.vic-color-preview[data-vic-details="lucian"] .home-preview-motion a.bg-vic-ink,
+.vic-color-preview[data-vic-details="lucian"] .home-preview-motion button.bg-vic-ink {
+  background-color: var(--demo-surface-raised);
+  color: var(--demo-text) !important;
+}
+.vic-color-preview[data-vic-details="lucian"] .home-preview-motion a.bg-vic-ink:hover,
+.vic-color-preview[data-vic-details="lucian"] .home-preview-motion button.bg-vic-ink:hover {
+  background-color: var(--demo-blue-deep);
+  color: var(--demo-text) !important;
+}
+.vic-color-preview[data-vic-details="lucian"] .home-preview-motion a.bg-vic-ink:focus-visible,
+.vic-color-preview[data-vic-details="lucian"] .home-preview-motion button.bg-vic-ink:focus-visible {
+  outline: 2px solid var(--demo-lime);
+  outline-offset: 3px;
+}

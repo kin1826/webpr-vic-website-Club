@@ -85,6 +85,7 @@ Các link chưa được VIC xác nhận đang để `null`; website sẽ không
 - `/hoc-thuat` và `/hoc-thuat/:slug`.
 - `/thanh-vien/:slug`.
 - `/design-system` và trang 404.
+- `/default`: trang xem trước trạng thái “Trang chưa sẵn sàng”. Để tạm đưa một trang bất kỳ về trạng thái này, thêm route của trang đó vào `defaultPagePaths` trong `src/config/page-availability.ts` (ví dụ `"/san-pham"` hoặc `"/san-pham/:slug"`); bỏ route khỏi danh sách để khôi phục nội dung cũ.
 - `/admin/tuyen-thanh-vien`: quản trị đợt tuyển; khi dùng API thật cần Google Sign-In và email trong allowlist.
 
 Lệnh build tạo thêm `index.html` cho các route mẫu và `404.html`, giúp refresh URL con hoạt động trên hosting tĩnh.
